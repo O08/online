@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.et.be.online.mapper.SceneMapper">
+    <sql id="tableName">
+        scene
+    </sql>
+
+    <sql id="baseColumn">
+        id,product_id,scene_type,scene_desc
+    </sql>
+    
+    <select id="getProducts" resultType="com.et.be.online.domain.ro.ProductRO">
+        select p.product_code,p.product_name,d.discount_percent,p.price,p.feature_image,p.images
+        from product p inner join scene s on p.id = s.product_id
+        left join discount d on p.discount_id = d.id
+        where s.scene_type = #{scene_type};
+    </select>
+
+    <select id="getSingleProduct" resultType="com.et.be.online.domain.ro.ProductRO">
+        select p.product_code,p.product_name,d.discount_percent,p.price,p.feature_image,p.images
+        from product p
+        left join discount d on p.discount_id = d.id
+        where p.product_code = #{product_code};
+    </select>
+
+</mapper>

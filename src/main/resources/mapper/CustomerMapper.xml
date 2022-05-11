@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.et.be.online.mapper.CustomerMapper">
+    <sql id="tableName">
+        customer
+    </sql>
+
+    <sql id="baseColumn">
+        id,username,password,first_name,last_name,email,telephone,mobile,created_at,modified_at
+    </sql>
+
+</mapper>

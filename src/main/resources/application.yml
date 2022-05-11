@@ -1,0 +1,84 @@
+server:
+  port: 8081
+##  context-path: /dock
+spring:
+  devtools:
+    livereload:
+      enabled: true
+    restart:
+      enabled: true
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+  mail:
+    host: smtp.163.com
+    username: ark_paean@163.com
+    password: KUFDDKDJJRMGKFZX
+    default-encoding: UTF-8
+
+
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: ${mysql_url}
+    username: ${mysql_username}
+    password: ${mysql_password}
+    datasourcetype: com.alibaba.druid.pool.DruidDataSource
+
+
+logging:
+  level:
+    com:
+      egzosn: debug
+  file: examples.log
+
+mybatis-plus:
+  mapper-locations: classpath:mapper/*.xml
+  global-config:
+    db-config:
+      #主键类型 AUTO:"数据库ID自增" INPUT:"用户输入ID",ID_WORKER:"全局唯一ID (数字类型唯一ID)", UUID:"全局唯一ID UUID";
+      id-type: auto
+      #字段策略 IGNORED:"忽略判断"  NOT_NULL:"非 NULL 判断")  NOT_EMPTY:"非空判断"
+      field-strategy: NOT_EMPTY
+      #数据库类型
+      db-type: MYSQL
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    map-underscore-to-camel-case: true
+    call-setters-on-nulls: true
+
+app:
+  url: &app.url http://localhost:8081
+file:
+  uploadPath: &file.uploadPath images/
+  directoryMapping: /xechat/
+  staticAccessPath: /**
+  accessAddress: http://localhost:8081/images/
+chatrecord:
+  path: /Users/dengjisi/Applications/data/xchat/chatrecord/
+  accessAddress: http://localhost:8081/chatrecord/
+  password: c85715fec7827f3b388af185b8e7db77
+
+restTemplate:
+  threadSize: 20
+  waitingTime: 500
+  connectTimeOut: 10000
+  readTimeOut: 10000
+turing:
+  apiUrl: http://openapi.tuling123.com/openapi/api/v2
+  apiKey:
+
+rsa:
+  publicKey: MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDdeBkJLgBsYny8XRFIG5L2276Go/l6Y7EN2DwUpstzsBcXw2hWDbLCY4xxGqYStiS9PNMRD+zkKNcvZQGIv/hSQ2j7RwHayAcKa1JCr07q8kxL9DXiCKLh9m/uEvP+q4B98R6ALlDHleTKxwY7XF/I6Hvmwy0gM+vDY4b8DK80UQIDAQAB
+  privateKey: MIICdgIBADANBgkqhkiG9w0BAQEFAASCAmAwggJcAgEAAoGBAN14GQkuAGxifLxdEUgbkvbbvoaj+XpjsQ3YPBSmy3OwFxfDaFYNssJjjHEaphK2JL080xEP7OQo1y9lAYi/+FJDaPtHAdrIBwprUkKvTuryTEv0NeIIouH2b+4S8/6rgH3xHoAuUMeV5MrHBjtcX8joe+bDLSAz68NjhvwMrzRRAgMBAAECgYAy9l2med4xkqk67Bybr/Kt2Qua7nUsV2/o7GsI4ofbJ3hs6LOj57OMnT02UqhIEn9aR3qXSMedihNYTeEgP3KLx+ih2Z8wJCjHXLZlupfQVl3iTg1z2bim116fFcLARA/h4un/yUWnvDx9Lf83QpYq+Y3XcHo+Wu1qonKlOfyolQJBAPNKLmAbzPwTgUsVxrsoL6/mvqQ6j27dhP11/MF5gTyCgbrRjQd63j1LVfXv7pNzBvrVpIuRps+rlthjzBVjh0UCQQDpChT4bvfC2G4UiBoBqbOC5iU1VavHAXv8bVzUOHxBx7qUpIWbCEtFFSGUJLQOroZtGl2PGVyKCYvmdJoj0LOdAkEAl8Z+efy9+8BbV7FFInsmjNEhu6jA1IQjtE/IGBcqFcrBDgAuwCzZullmTiCZsKkBALkJhvydmU7Nsz9HEUzfFQJAJhKKmIfwnHmlil8t+IWUGVemTo9fkBSy/+uSFe3ghxKtbelvFoQFYBTytnREon1q4tpC3MUk9DxZCd6U7DMFlQJAYkoMern2eVyGnRnuKuSFzZ6OSOiScVeOKi78zEqtTtqxGIiMewlVgMLLLb1Vh1ZI9SlwtPkY68hy+akgGLubmw==
+
+
+
+
+
+
+
+
+
+
+

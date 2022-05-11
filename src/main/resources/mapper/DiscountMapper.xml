@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.et.be.online.mapper.DiscountMapper">
+    <sql id="tableName">
+        discount
+    </sql>
+
+    <sql id="baseColumn">
+        id,discount_name,discount_desc,discount_percent,active,created_at,modified_at,deleted_at
+    </sql>
+
+</mapper>
