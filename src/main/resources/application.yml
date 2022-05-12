@@ -12,8 +12,8 @@ spring:
       matching-strategy: ant_path_matcher
   mail:
     host: smtp.163.com
-    username: ark_paean@163.com
-    password: KUFDDKDJJRMGKFZX
+    username: ${email}
+    password: ${email_token}
     default-encoding: UTF-8
 
 
@@ -55,9 +55,9 @@ file:
   staticAccessPath: /**
   accessAddress: http://localhost:8081/images/
 chatrecord:
-  path: /Users/dengjisi/Applications/data/xchat/chatrecord/
+  path: ${chatrecord_path}
   accessAddress: http://localhost:8081/chatrecord/
-  password: c85715fec7827f3b388af185b8e7db77
+  password: ${chatrecord_password}
 
 restTemplate:
   threadSize: 20
@@ -69,8 +69,8 @@ turing:
   apiKey:
 
 rsa:
-  publicKey: MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDdeBkJLgBsYny8XRFIG5L2276Go/l6Y7EN2DwUpstzsBcXw2hWDbLCY4xxGqYStiS9PNMRD+zkKNcvZQGIv/hSQ2j7RwHayAcKa1JCr07q8kxL9DXiCKLh9m/uEvP+q4B98R6ALlDHleTKxwY7XF/I6Hvmwy0gM+vDY4b8DK80UQIDAQAB
-  privateKey: MIICdgIBADANBgkqhkiG9w0BAQEFAASCAmAwggJcAgEAAoGBAN14GQkuAGxifLxdEUgbkvbbvoaj+XpjsQ3YPBSmy3OwFxfDaFYNssJjjHEaphK2JL080xEP7OQo1y9lAYi/+FJDaPtHAdrIBwprUkKvTuryTEv0NeIIouH2b+4S8/6rgH3xHoAuUMeV5MrHBjtcX8joe+bDLSAz68NjhvwMrzRRAgMBAAECgYAy9l2med4xkqk67Bybr/Kt2Qua7nUsV2/o7GsI4ofbJ3hs6LOj57OMnT02UqhIEn9aR3qXSMedihNYTeEgP3KLx+ih2Z8wJCjHXLZlupfQVl3iTg1z2bim116fFcLARA/h4un/yUWnvDx9Lf83QpYq+Y3XcHo+Wu1qonKlOfyolQJBAPNKLmAbzPwTgUsVxrsoL6/mvqQ6j27dhP11/MF5gTyCgbrRjQd63j1LVfXv7pNzBvrVpIuRps+rlthjzBVjh0UCQQDpChT4bvfC2G4UiBoBqbOC5iU1VavHAXv8bVzUOHxBx7qUpIWbCEtFFSGUJLQOroZtGl2PGVyKCYvmdJoj0LOdAkEAl8Z+efy9+8BbV7FFInsmjNEhu6jA1IQjtE/IGBcqFcrBDgAuwCzZullmTiCZsKkBALkJhvydmU7Nsz9HEUzfFQJAJhKKmIfwnHmlil8t+IWUGVemTo9fkBSy/+uSFe3ghxKtbelvFoQFYBTytnREon1q4tpC3MUk9DxZCd6U7DMFlQJAYkoMern2eVyGnRnuKuSFzZ6OSOiScVeOKi78zEqtTtqxGIiMewlVgMLLLb1Vh1ZI9SlwtPkY68hy+akgGLubmw==
+  publicKey: ${ras_publicKey}
+  privateKey: ${ras_privateKeyKey}
 
 
 
