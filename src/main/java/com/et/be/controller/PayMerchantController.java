@@ -153,7 +153,7 @@ public class PayMerchantController {
      * </p>
      * 如果未设置 {@link com.egzosn.pay.common.api.PayMessageHandler} 那么会使用默认的 {@link com.egzosn.pay.common.api.DefaultPayMessageHandler}
      */
-    @PostMapping(value = "payBack{detailsId}.json")
+    @RequestMapping(value = "payBack{detailsId}.json")
     public String payBack(HttpServletRequest request, @PathVariable String detailsId) {
         //业务处理在对应的PayMessageHandler里面处理，在哪里设置PayMessageHandler，详情查看com.egzosn.pay.common.api.PayService.setPayMessageHandler()
         return manager.payBack(detailsId, new HttpRequestNoticeParams(request));
