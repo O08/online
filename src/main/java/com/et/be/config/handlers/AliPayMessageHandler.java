@@ -5,6 +5,8 @@ import com.egzosn.pay.ali.bean.AliPayMessage;
 import com.egzosn.pay.common.api.PayMessageHandler;
 import com.egzosn.pay.common.bean.PayOutMessage;
 import com.egzosn.pay.common.exception.PayErrorException;
+import com.et.be.online.service.PayLogService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
@@ -18,6 +20,9 @@ import java.util.Map;
 @Component
 public class AliPayMessageHandler implements PayMessageHandler<AliPayMessage, AliPayService> {
 
+
+    @Autowired
+    private PayLogService payLogService;
 
     /**
      * 处理支付回调消息的处理器接口
@@ -36,11 +41,12 @@ public class AliPayMessageHandler implements PayMessageHandler<AliPayMessage, Al
         Map<String, Object> message = payMessage.getPayMessage();
         //交易状态
         String trade_status = (String) message.get("trade_status");
-
+        // 存储支付返回
+        this.payLogService.createPayLog(context.toString(),message.toString());
         //上下文对象中获取账单
-//        AmtApply amtApply = (AmtApply)context.get("amtApply");
+         // AmtApply amtApply = (AmtApply)context.get("amtApply");
         //日志存储
-//        amtPaylogService.createAmtPaylogByCallBack(amtApply,  message.toString());
+        // amtPaylogService.createAmtPaylogByCallBack(amtApply,  message.toString());
         //交易完成
         if ("TRADE_SUCCESS".equals(trade_status) || "TRADE_FINISHED".equals(trade_status)) {
 
