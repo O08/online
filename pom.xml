@@ -116,34 +116,22 @@
             <version>4.5.15</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.github.kuaidi100-api</groupId>
+            <artifactId>sdk</artifactId>
+            <version>1.0.8</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.hibernate.validator</groupId>
+            <artifactId>hibernate-validator</artifactId>
+            <version>6.0.17.Final</version>
+        </dependency>
+
+
 
     </dependencies>
 
-
-<!--    <build>-->
-<!--        &lt;!&ndash;编译打包后的文件包名&ndash;&gt;-->
-<!--        <finalName>app</finalName>-->
-<!--        <plugins>-->
-<!--            <plugin>-->
-<!--                &lt;!&ndash;GAV坐标(G组织id，A项目id，V版本号)&ndash;&gt;-->
-<!--                <groupId>org.apache.maven.plugins</groupId>-->
-<!--                <artifactId>maven-compiler-plugin</artifactId>-->
-<!--                <version>3.8.1</version>-->
-<!--                &lt;!&ndash;配置:-->
-<!--                一般而言，target与source是保持一致的，但是，有时候为了让程序能在其-->
-<!--                他版本的jdk中运行(对于低版本目标jdk，源代码中不能使用低版本jdk中不-->
-<!--                支持的语法)，会存在target不同于source的情况&ndash;&gt;-->
-<!--                <configuration>-->
-<!--                    &lt;!&ndash;源代码使用的JDK版本&ndash;&gt;-->
-<!--                    <source>1.8</source>-->
-<!--                    &lt;!&ndash; 需要生成的目标class文件的编译版本 &ndash;&gt;-->
-<!--                    <target>1.8</target>-->
-<!--                    &lt;!&ndash; 字符集编码，防止中文乱码 &ndash;&gt;-->
-<!--                    <encoding>UTF-8</encoding>-->
-<!--                </configuration>-->
-<!--            </plugin>-->
-<!--        </plugins>-->
-<!--    </build>-->
 
     <build>
         <plugins>

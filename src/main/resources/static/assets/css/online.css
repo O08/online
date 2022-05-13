@@ -1,0 +1,23 @@
+.section-product-list {
+    padding: 0 0 30px;
+}
+.section-product-category-add {
+    padding: 0 0 30px;
+    visibility: hidden;
+}
+.section-discount-add {
+    padding: 0 0 30px;
+    visibility: hidden;
+}
+.section-product-add {
+    padding: 0 0 30px;
+    visibility: hidden;
+}
+.product-list-add-button {
+ vertical-align: middle;
+}
+
+.section-product-add.active {
+    opacity: 1;
+    visibility: visible;
+}

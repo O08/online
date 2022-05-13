@@ -72,6 +72,11 @@ rsa:
   publicKey: ${ras_publicKey}
   privateKey: ${ras_privateKeyKey}
 
+kuaidi100:
+  key: ${kuaidi100_key}
+  customer: ${kuaidi100_customer}
+
+
 
 
 

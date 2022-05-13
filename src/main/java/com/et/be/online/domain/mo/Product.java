@@ -57,7 +57,7 @@ public class Product extends Model<Product> implements Serializable {
     /**
      * 价格
      */
-    private BigDecimal price;
+    private Double price;
     /**
      * 优惠
      */
