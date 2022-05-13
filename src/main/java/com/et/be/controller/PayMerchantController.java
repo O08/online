@@ -1,15 +1,26 @@
 package com.et.be.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.UUID;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
+import com.alipay.api.internal.util.AlipaySignature;
 import com.egzosn.pay.ali.bean.AliTransactionType;
+import com.egzosn.pay.common.bean.NoticeParams;
+import com.et.be.inbox.domain.vo.ResponseVO;
+import com.et.be.online.enums.PayCodeEnum;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -33,7 +44,9 @@ import com.egzosn.pay.web.support.HttpRequestNoticeParams;
 @Api(value = "提供支付功能", tags = "交易系统-支付")
 @RequestMapping("pay")
 @Controller
+@Slf4j
 public class PayMerchantController {
+
 
     @Autowired
     private PayServiceManager manager;
@@ -251,4 +264,63 @@ public class PayMerchantController {
         return manager.downloadBill(order);
 
     }
+
+    /**
+     * 支付回调 get
+     * @param request
+     * @param response
+     * @param detailsId
+     * @return
+     * @throws IOException
+     */
+    @RequestMapping(value = "returnUrl{detailsId}.json")
+    @ResponseBody
+    public ResponseVO synCallBack(HttpServletRequest request, HttpServletResponse response, @PathVariable String detailsId) throws IOException {
+        //1.获取支付宝回调参数
+        log.info("同步回调********************************");
+
+        NoticeParams noticeParams = manager.getNoticeParams(detailsId, new HttpRequestNoticeParams(request));
+        // 日志记录
+        log.info("###支付宝同步通知开始###params:{}", noticeParams.toString());
+        // 2.验签操作,参考支付宝Demo的return_url.jsp
+
+        boolean signVerified = manager.verify(detailsId,noticeParams);
+        if(!signVerified){
+            return new ResponseVO(PayCodeEnum.SIGN_VERIFIED_FAILURE);
+        }
+
+            // 商户订单号
+            String outTradeNo = (String) noticeParams.getBody().get("out_trade_no");
+            // 支付宝交易号
+            String tradeNo = (String) noticeParams.getBody().get("trade_no");
+            // 付款金额
+            String totalAmount = (String) noticeParams.getBody().get("total_amount");
+
+
+
+            //3.新增订单表
+
+
+            //3.封装在form表单，隐藏get参数
+            //封装参数到form表达,浏览器模拟提交,为隐藏参数,使用POST+隐藏域表单包装
+            String htmlFrom = "<form name='punchout_form'"
+                    + " method='get' action='http://127.0.0.1:8081/' >"
+                    + "<input type='hidden' name='outTradeNo' value='" + outTradeNo + "'>"
+                    + "<input type='hidden' name='tradeNo' value='" + tradeNo + "'>"
+                    + "<input type='hidden' name='totalAmount' value='" + totalAmount + "'>"
+                    + "<input type='submit' value='立即支付' style='display:none'>"
+                    + "</form><script>document.forms[0].submit();" + "</script>";
+            //4.输出
+            response.setContentType("text/html;charset=utf-8");
+            PrintWriter writer = response.getWriter();
+            writer.print(htmlFrom);
+            writer.flush();
+            writer.close();
+            log.info("###支付宝同步通知结束###params:{}");
+
+        return null;
+    }
+
+
+
 }
