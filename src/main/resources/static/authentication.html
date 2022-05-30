@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" href="images/favicon.png" type="image/x-icon">
+
+    <title>Authentication</title>
+
+    <!-- Fonts -->
+    <link rel="stylesheet" href="assets/fonts/Lato/Lato.css">
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="assets/fonts/flaticon/flaticon.css">
+
+    <!-- Libs -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="libs/select2/css/select2.min.css">
+    <link rel="stylesheet" href="libs/slick/slick.css">
+
+    <!-- Theme -->
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/saleos.css">
+    <meta name="theme-color" content="#ECECEC">
+</head>
+<body>
+ <div class="container-fluid login display-none">
+     <div class="row">
+         <div class="col-lg-3">
+
+         </div>
+         <div class="col-lg-6">
+             <section class="section-login">
+                 <div class="row">
+                     <div class="col-lg-6">
+                         <form  id="login-form" class="login-form" method="post" action="/user/login">
+                             <div class="form-group form-logo">
+                                 <div class="col-lg-4 padding-0">
+                                     <a href="#"><img src="images/logo.png" alt=""></a>
+                                 </div>
+                             </div>
+                             <div class="form-group auth-form-tittle">
+                                 <h4>Login to your account</h4>
+                             </div>
+                             <div class="form-group">
+                                 <label for="login-email">Email Address:</label>
+                                 <input type="email" name ="email" class="form-control" placeholder="Enter Email Address" id="login-email" required="required">
+                             </div>
+                             <div class="form-group">
+                                 <label for="login-password">Password:</label>
+                                 <input type="password" name ="password" class="form-control" placeholder="Enter Password" id="login-password" required="required">
+                             </div>
+                             <button type="submit" class="btn btn-primary auth-continue">Login to Continue</button>
+                             <div class="form-group sign-up-note">
+                                 Don't have an account?<span class="sign-up-link">&nbsp sign up</span>
+                             </div>
+                         </form>
+                     </div>
+                     <div class="col-lg-6 padding-0">
+                         <img src="images/login-cover.jpeg" class="auth-background-img">
+                     </div>
+                 </div>
+             </section>
+         </div>
+         <div class="col-lg-3">
+
+         </div>
+     </div>
+
+
+ </div>
+ <div class="container-fluid signup">
+     <div class="row">
+         <div class="col-lg-3">
+
+         </div>
+         <div class="col-lg-6">
+             <section class="section-signup">
+                 <div class="row">
+                     <div class="col-lg-6">
+                         <form  id="signup-form" class="signup-form">
+                             <div class="form-group form-logo">
+                                 <div class="col-lg-4 padding-0">
+                                     <a href="#"><img src="images/logo.png" alt=""></a>
+                                 </div>
+                             </div>
+                             <div class="form-group auth-form-tittle">
+                                 <h4>Get started with easily register</h4>
+                                 <span>free register and you can enjoy it.</span>
+                             </div>
+                             <div class="form-group">
+                                 <input type="email" class="form-control" placeholder="Email Address" id="signup-email" required="required">
+                             </div>
+                             <div class="form-group">
+                                 <input type="text" class="form-control" placeholder="Full Name" id="signup-full-name" required="required">
+                             </div>
+                             <div class="form-group">
+                                 <input type="password" class="form-control" placeholder="Password" id="signup-password" required="required">
+                             </div>
+                             <div class="form-group">
+                                 <input type="password" class="form-control" placeholder="Confirm Password" id="signup-confirmed-password" onchange="checkPasswords()" required="required">
+                             </div>
+                             <button type="submit" class="btn btn-primary auth-continue">Create Account</button>
+                             <div class="form-group sign-up-note">
+                                 have an account?<span class="sign-in-link">&nbsp sign in</span>
+                             </div>
+                         </form>
+                     </div>
+                     <div class="col-lg-6 padding-0">
+                         <img src="images/signup-cover.jpg" class="auth-background-img">
+                     </div>
+                 </div>
+             </section>
+         </div>
+         <div class="col-lg-3">
+
+         </div>
+     </div>
+
+
+ </div>
+<!-- Libs -->
+<script src="libs/jquery-2.2.3.min.js"></script>
+ <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.min.js"></script>
+ <script src="libs/select2/js/select2.min.js"></script>
+<script src="libs/slick/slick.min.js"></script>
+ <script src="libs/jsencrypt.min.js"></script>
+<!-- Theme -->
+<script src="assets/js/custom.js"></script>
+ <script src="assets/js/saleos.js"></script>
+
+</body>
+</html>

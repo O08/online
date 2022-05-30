@@ -33,6 +33,12 @@ public class OrderDetails extends Model<OrderDetails> implements Serializable {
      * 用户
      */
     private Long userId;
+
+    /**
+     * 订单配送地址
+     */
+    private Long addressId;
+
     /**
      * 订单总交易额
      */

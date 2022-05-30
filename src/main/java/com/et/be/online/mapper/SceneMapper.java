@@ -1,8 +1,12 @@
 package com.et.be.online.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.et.be.online.domain.mo.Scene;
 import com.et.be.online.domain.ro.ProductRO;
+import com.et.be.online.domain.vo.ProductManagementListVO;
+import com.et.be.online.domain.vo.ProductVO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
@@ -26,4 +30,9 @@ public interface SceneMapper extends BaseMapper<Scene> {
   List<ProductRO> getProducts(@Param("scene_type") String sceneType);
 
   ProductRO getSingleProduct(@Param("product_code") String productCode);
+
+  Page<ProductManagementListVO> getProductManagementList(Page page,@Param("productName") String productName);
+
+
+  IPage<ProductRO> getOnlineProductList(Page<ProductVO> page);
 }

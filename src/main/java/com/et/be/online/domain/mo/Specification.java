@@ -33,9 +33,13 @@ public class Specification extends Model<Specification> implements Serializable 
      */
     private Long productCode;
     /**
-     * 颜色
+     * 标签 颜色或者系列等
      */
-    private String color;
+    private String tag;
+    /**
+     * 标签属性
+     */
+    private String tagAttribute;
     /**
      * 创建日期
      */

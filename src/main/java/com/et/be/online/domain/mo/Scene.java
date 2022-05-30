@@ -30,7 +30,7 @@ public class Scene extends Model<Scene> implements Serializable {
     /**
      * 产品
      */
-    private Long productId;
+    private String productCode;
     /**
      * 类型
      */

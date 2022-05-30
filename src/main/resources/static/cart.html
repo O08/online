@@ -135,7 +135,7 @@
 				<div class="container">
 					<h1 class="page-title h3 text-center">Your cart</h1>
 
-					<table class="cart-table cart table">
+					<table class="cart-table cart table" id="cart-table">
 						<thead>
 						<tr>
 							<th class="product-thumbnail">Product</th>
@@ -245,7 +245,7 @@
 						<div class="col-lg-6 cart-total">
 							<div class="cart-subtotal d-flex justify-content-between align-items-center">
 								<span>Subtotal</span>
-								<span>$128.00</span>
+								<span id="cart-subtotal">$128.00</span>
 							</div>
 
 							<div class="cart-total__btns text-lg-right">
@@ -307,7 +307,7 @@
 			</nav>
 
 			<div class="footer-bottom">
-				<div class="copyright">Copyright &copy; 2020.Company name All rights reserved.<a target="_blank" href="http://sc.chinaz.com/moban/">&#x7F51;&#x9875;&#x6A21;&#x677F;</a></div>
+				<div class="copyright">Copyright &copy; 2020.Company name All rights reserved.</div>
 				<ul class="footer-bottom__menu">
 					<li><a href="#">Privacy Policy</a></li>
 					<li><a href="#">Terms of use</a></li>
@@ -331,6 +331,7 @@
 			</form>
 		</div>
 	</div>
+
 	<!-- Libs -->
 	<script src="libs/jquery-2.2.3.min.js"></script>
 	<script src="libs/bootstrap-4.3.1/js/bootstrap.min.js"></script>
@@ -339,5 +340,9 @@
 
 	<!-- Theme -->
 	<script src="assets/js/custom.js"></script>
+	<script src="assets/js/saleos.js"></script>
+ <script>
+	 window.onload = showCartItem();
+ </script>
 </body>
 </html>

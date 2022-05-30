@@ -6,6 +6,8 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import java.math.BigDecimal;
 import java.util.Date;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
@@ -40,22 +42,25 @@ public class Discount extends Model<Discount> implements Serializable {
     /**
      * 折扣
      */
-    private BigDecimal discountPercent;
+    private Double discountPercent;
     /**
      * 优惠活动 true 启用优惠 false 未启用
      */
-    private Integer active;
+    private Boolean active;
     /**
      * 创建日期
      */
+    @JsonFormat( pattern = "yyyy-MM-dd")
     private Date createdAt;
     /**
      * 修改日期
      */
+    @JsonFormat( pattern = "yyyy-MM-dd")
     private Date modifiedAt;
     /**
      * 删除日期
      */
+    @JsonFormat( pattern = "yyyy-MM-dd")
     private Date deletedAt;
 
 }

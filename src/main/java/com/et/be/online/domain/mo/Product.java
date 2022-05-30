@@ -74,5 +74,15 @@ public class Product extends Model<Product> implements Serializable {
      * 删除日期
      */
     private Date deletedAt;
+    /**
+     * 商品封面图片
+     */
+    private String featureImage;
+    /**
+     * 产品url
+     */
+    private String productUrl;
+
+
 
 }

@@ -35,7 +35,7 @@ public class OrderItem extends Model<OrderItem> implements Serializable {
     /**
      * 产品
      */
-    private Long productId;
+    private String productCode;
     /**
      * 购买数量
      */

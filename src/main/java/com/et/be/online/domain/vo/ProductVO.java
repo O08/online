@@ -22,5 +22,8 @@ public class ProductVO {
     @ApiModelProperty("商品封面图片")
     private String featureImage;
 
+    @ApiModelProperty("商品Url")
+    private String productUrl;
+
 
 }

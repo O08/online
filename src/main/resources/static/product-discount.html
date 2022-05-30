@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="shortcut icon" href="images/favicon.png" type="image/x-icon">
 
-    <title>Contact</title>
+    <title>Online Sale</title>
 
     <!-- Fonts -->
     <link rel="stylesheet" href="assets/fonts/Lato/Lato.css">
@@ -14,166 +14,141 @@
     <!-- Icons -->
     <link rel="stylesheet" href="assets/fonts/flaticon/flaticon.css">
     <link rel="stylesheet" href="assets/fonts/webfont/css/materialdesignicons.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" crossorigin="anonymous">
 
     <!-- Libs -->
     <link rel="stylesheet" href="libs/bootstrap-4.3.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="libs/select2/css/select2.min.css">
     <link rel="stylesheet" href="libs/slick/slick.css">
     <link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.15.3/dist/bootstrap-table.min.css">
+    <link rel="stylesheet" href="libs/fileinput5.2.8/css/fileinput.css">
 
 
     <!-- Theme -->
     <link rel="stylesheet" href="assets/css/style.css">
     <meta name="theme-color" content="#ECECEC">
+
+    <link rel="stylesheet" href="assets/css/online.css">
 </head>
 <body>
-<div class="head-line"></div>
-
-<header class="page-header">
-    <div class="container">
-        <div class="top-bar row align-items-center">
-            <div class="logo col-lg-4">
-                <a href="index.html"><img src="images/logo.png" alt=""></a>
-            </div>
-
-        </div> <!-- end of top-bar -->
-
-        <nav class="header-navigation">
-            <ul class="nav justify-content-center">
-                <li class="nav-item">
-                    <a class="nav-link" href="product-management.html">Product Management</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="product-category.html">Product category Create</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="product-discount.html">Discount Create</a>
-                </li>
-            </ul>
-        </nav>
-    </div>
-</header>
-
-<div class="page-wrap">
+<div class="container-fluid">
     <div class="row">
-        <div class="col-lg-3"></div>
-        <div class="col-lg-6">
-            <!-- Page content -->
-            <div class="page-content">
-                <section class="section-discount-list">
-                    <table data-toggle="product-list"
-                           data-url=""
-                           data-pagination="true"
-                           data-search="true">
-                        <thead>
-                        <tr>
-                            <th data-field="id">product_category</th>
-                            <th data-field="politics">product_code</th>
-                            <th data-field="math">product_name</th>
-                            <th data-field="chinese">product_price</th>
-                            <th data-field="name">product_inventory</th>
-                            <th data-field="english">discount_percent</th>
-                            <th data-field="biology">SKU</th>
-                            <th data-field="physics">created_at</th>
-                            <th data-field="chemistry">modified_at</th>
-                        </tr>
-                        </thead>
-                    </table>
-                </section>
-                <section class="section-discount-add">
-                    <form action="" method="post">
-                        <div class="form-group">
-                            <label for="discount_name">Discount Name:</label>
-                            <input type="text" class="form-control" placeholder="Enter Product category" id="discount_name">
-                        </div>
-                        <div class="form-group">
-                            <label for="discount_desc">Discount Desc:</label>
-                            <input type="text" class="form-control" placeholder="Enter Product category" id="discount_desc">
-                        </div>
-                        <div class="form-group">
-                            <label for="discount_percent">Discount Percent:</label>
-                            <input type="number" class="form-control" placeholder="Enter Product category" id="discount_percent">
-                        </div>
+        <div class="col-lg-3 padding-0 left-panel">
 
-                        <div class="form-group">
-                            Discount Percent:
-                            <label class="radio-inline"><input type="radio" name="discount_active">true</label>
-                            <label class="radio-inline"><input type="radio" name="discount_active">false</label>
-                        </div>
-
-                        <button type="submit" class="btn btn-primary" onclick="create_discount()">Submit</button>
-                    </form>
-                </section>
-            </div> <!-- /.page-content -->
-        </div>
-        <div class="col-lg-3"></div>
-
-    </div>
-
-
-</div> <!-- /.page-wrap -->
-
-<footer class="page-footer">
-    <div class="container">
-        <div class="foot-info row">
-            <div class="col-md-8">
-                <div class="d-lg-flex align-items-end text-center text-md-left">
-                    <a href="/" class="logo-footer">
-                        <img src="images/logo-white.png" alt="">
-                    </a>
-                    <div class="ml-lg-4 page-footer__text">Is a design-focused wordpress theme for unique products</div>
+            <div class="logo-panel">
+                <a href="/">
+                    <img class="online-icon" src="images/img.png" alt="">
+                </a>
+            </div>
+            <div class="sub-menu-panel">
+                <div class="sub-menu-item">
+                    <a href="product-category.html"><i class="mdi  mdi-menu"></i>Category Configuration</a>
+                </div>
+                <div class="sub-menu-item selected-sub-menu">
+                    <a href="product-discount.html"><i class="mdi  mdi-menu"></i>Discount Configuration</a>
+                </div>
+                <div class="sub-menu-item">
+                    <a href="product-management.html"><i class="mdi  mdi-menu"></i>Product Configuration</a>
                 </div>
             </div>
 
-            <div class="social col-md-4">
-                <span>Follow us:</span>
-                <ul class="social-links ml-md-3">
-                    <li><a href="#"><i class="mdi mdi-pinterest"></i></a></li>
-                    <li><a href="#"><i class="mdi mdi-facebook"></i></a></li>
-                    <li><a href="#"><i class="mdi mdi-instagram"></i></a></li>
-                    <li><a href="#"><i class="mdi mdi-twitter"></i></a></li>
-                </ul>
-            </div>
         </div>
 
-
-        <div class="footer-bottom">
-            <div class="copyright">Copyright &copy; 2020.Company name All rights reserved.<a target="_blank" href="http://sc.chinaz.com/moban/">&#x7F51;&#x9875;&#x6A21;&#x677F;</a></div>
-            <ul class="footer-bottom__menu">
-                <li><a href="#">Privacy Policy</a></li>
-                <li><a href="#">Terms of use</a></li>
-            </ul>
-        </div>
-    </div>
-</footer>
-
-<div id="js-back-to-top" class="back-to-top"><i class="flaticon-up-arrow-sign"></i> Page top</div>
-
-<div class="full-search-wrap">
-    <div class="full-search container">
-        <div class="close-s float-right js-close-search flaticon-cancel-button fi-2x"></div>
-        <form action="/" class="search-full-form">
-            <div class="position-relative">
-                <i class="search-icon flaticon-magnifying-glass-browser fi-2x"></i>
-                <input type="text" id="s-full" class="search-full-form__input" placeholder="Search">
-                <input type="submit" class="d-none">
+        <div class="col-lg-9 padding-0">
+            <div class="nav-panel">
+                <button type="button" class="btn btn-outline-primary nav-menu">
+                    <a href="product-management.html" class="selected-menu"><i class="mdi  mdi-apps"></i>Product</a>
+                </button>
+                <button type="button" class="btn btn-outline-secondary nav-menu">
+                    <a href="data-browser.html"><i class="mdi  mdi-google-drive"></i>Data Browser</a>
+                </button>
             </div>
-            <p class="hint">Type in your search and press enter</p>
-        </form>
+            <section class="section-interaction">
+                <div class="interaction-inner-spacer"></div>
+                <div class="row padding-0">
+                    <div class="col-lg-4 padding-0">
+                        <div class="input-group">
+
+                            <input type="search" class="form-control letter-spacing-0" placeholder="Search" />
+                            <span class="input-group-text border-0" id="search-addon">
+                                  <i class="fas fa-search"></i>
+                                 </span>
+                        </div>
+
+                    </div>
+                    <div class="col-lg-5 padding-0">
+
+                    </div>
+                    <div class="col-lg-3 padding-0">
+                        <div class="discount-list-add-button">
+                            <button class="btn btn-outline-primary letter-spacing-0">
+                                Add Discount <i class="mdi mdi-plus-circle-outline"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <div class="interaction-out-spacer"></div>
+            <section class="section-discount-list">
+                <table id="discount-list">
+                </table>
+            </section>
+            <section class="section-discount-add">
+                <form id="discount-add-form">
+                    <div class="form-group">
+                        <label for="discount_name">Discount Name:</label>
+                        <input type="text" class="form-control" placeholder="Enter Product category" id="discount_name">
+                    </div>
+                    <div class="form-group">
+                        <label for="discount_desc">Discount Desc:</label>
+                        <input type="text" class="form-control" placeholder="Enter Product category" id="discount_desc">
+                    </div>
+                    <div class="form-group">
+                        <label for="discount_percent">Discount Percent:</label>
+                        <input type="number" step="any" class="form-control" placeholder="Enter Product category" id="discount_percent">
+                    </div>
+
+                    <div class="form-group">
+                        Discount Percent:
+                        <label class="radio-inline"><input type="radio" name="discount_active" value= true>true</label>
+                        <label class="radio-inline"><input type="radio" name="discount_active" value= false>false</label>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="reset" class="btn btn-outline-secondary">Reset</button>
+                    <button type="button" class="btn btn-secondary cancel">Cancel</button>
+                </form>
+            </section>
+        </div>
+
     </div>
 </div>
 
+
+
+
+
+
+
 <!-- Libs -->
 <script src="libs/jquery-2.2.3.min.js"></script>
+<script src="https://cdn.staticfile.org/popper.js/1.15.0/umd/popper.min.js"></script>
 <script src="libs/bootstrap-4.3.1/js/bootstrap.min.js"></script>
 <script src="libs/select2/js/select2.min.js"></script>
 <script src="libs/slick/slick.min.js"></script>
 <script src="https://unpkg.com/bootstrap-table@1.15.3/dist/bootstrap-table.min.js"></script>
+<script src="libs/fileinput5.2.8/js/fileinput.js"></script>
 
 
 <!-- Theme -->
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCjprc-1BZ4ft8yC81jNUAdtCkSByqP-DY"></script>
+<script src="themes/fas/theme.js" type="text/javascript"></script>
+<script src="themes/explorer-fas/theme.js" type="text/javascript"></script>
 <script src="assets/js/custom.js"></script>
+<script src="assets/js/home.js"></script>
+<script src="assets/js/base.js"></script>
+<script>
+window.onload =  discount_list();
+</script>
 
 </body>
 </html>

@@ -9,6 +9,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.nio.charset.Charset;
+
 @Api(value = "电商-客户", tags = "电商")
 @RequestMapping("api/v1/online")
 @RestController
@@ -22,8 +26,9 @@ public class SubscribeController {
     @ApiOperation("订阅newsletter")
     @ResponseBody
     @PostMapping(value = "subscribeNewsLetter")
-    public ResponseVO featuredProducts(@RequestBody String email) {
-        subscribeService.subscribeNewsLetter(email);
+    public ResponseVO featuredProducts(@RequestBody String email) throws UnsupportedEncodingException {
+
+        subscribeService.subscribeNewsLetter( URLDecoder.decode(email,"UTF-8"));
         return new ResponseVO("success");
     }
 

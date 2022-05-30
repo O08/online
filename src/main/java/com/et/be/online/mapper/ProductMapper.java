@@ -3,6 +3,10 @@ package com.et.be.online.mapper;
 import com.et.be.online.domain.mo.Product;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Update;
+
+import java.util.Date;
 
 /**
  * (product)数据Mapper
@@ -13,5 +17,9 @@ import org.apache.ibatis.annotations.Mapper;
 */
 @Mapper
 public interface ProductMapper extends BaseMapper<Product> {
+
+    @Update("update product set images = #{images} where product_code = #{productCode}")
+    void updateProductImage(@Param("productCode") String productCode, @Param("images")String images);
+
 
 }

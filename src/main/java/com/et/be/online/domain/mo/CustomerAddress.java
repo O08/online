@@ -49,6 +49,10 @@ public class CustomerAddress extends Model<CustomerAddress> implements Serializa
      */
     private String postalCode;
     /**
+     * 州
+     */
+    private String state;
+    /**
      * 国家
      */
     private String country;

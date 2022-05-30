@@ -22,6 +22,10 @@ public class ProductRO {
     @ApiModelProperty("商品封面图片")
     private String featureImage;
 
-    @ApiModelProperty("图片列表")
-    private String images;
+    @ApiModelProperty("产品url")
+    private String productUrl;
+
+    @ApiModelProperty("商品介绍")
+    private String productDesc;
+
 }

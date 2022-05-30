@@ -41,4 +41,14 @@ public class DeleveryUtil {
 
     }
 
+    /**
+     * 快递费用
+     * @return
+     */
+    public static Double calculateDeleveryFee(){
+        return 200.00;
+    }
+
+
+
 }

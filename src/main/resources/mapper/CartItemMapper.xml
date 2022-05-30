@@ -9,4 +9,12 @@
         id,session_id,product_id,quantity,created_at,modified_at
     </sql>
 
+    <select id="cart" resultType="com.et.be.online.domain.vo.CartItemVO">
+        select p.product_code,p.product_name,d.discount_percent,p.price,p.feature_image,p.product_url,t.quantity
+        from product p
+        left join discount d on p.discount_id = d.id
+        inner join cart_item t on p.product_code = t.product_code
+        where t.session_id = #{session_id};
+    </select>
+
 </mapper>

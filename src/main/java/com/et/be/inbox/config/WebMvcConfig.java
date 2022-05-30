@@ -1,9 +1,11 @@
 package com.et.be.inbox.config;
 
 import com.et.be.inbox.interceptor.PermissionInterceptor;
+import com.et.be.online.constant.SysConfigConstant;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import javax.annotation.Resource;
@@ -25,14 +27,20 @@ public class WebMvcConfig implements WebMvcConfigurer {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler(fileConfig.getStaticAccessPath())
+        registry.addResourceHandler(fileConfig.getStaticAccessPath(), SysConfigConstant.DOC_DIR_PATH_PATTERNS)
                 .addResourceLocations("classpath:/META-INF/resources/", "classpath:/resources/", "classpath:/static/",
-                        "file:" + fileConfig.getDirectoryMapping());
+                        "file:" + fileConfig.getDirectoryMapping(),"file:" +SysConfigConstant.SERVER_DIR+SysConfigConstant.DOC_DIR);
     }
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(permissionInterceptor).addPathPatterns("/api/record/**", "/chatrecord/**");
+    }
+    @Override
+    public void addViewControllers(final ViewControllerRegistry registry) {
+
+       // registry.addViewController("/authentication.html");
+//        registry.addViewController("/index.html");
     }
 
 }

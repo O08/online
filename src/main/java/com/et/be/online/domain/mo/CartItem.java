@@ -35,11 +35,16 @@ public class CartItem extends Model<CartItem> implements Serializable {
     /**
      * 产品
      */
-    private Long productId;
+    private String productCode;
     /**
      * 数量
      */
     private Integer quantity;
+
+    /**
+     *  商品单项合计价格
+     */
+    private Double total;
     /**
      * 创建日期
      */

@@ -42,5 +42,12 @@ public class ProductManagementDTO {
     @NotEmpty
     private String SKU;
 
+    @ApiModelProperty("SKU")
+    @NotEmpty
+    private String featureImage;
+
+    @ApiModelProperty("商品url")
+    private String productUrl;
+
 
 }

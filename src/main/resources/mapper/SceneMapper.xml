@@ -10,17 +10,39 @@
     </sql>
     
     <select id="getProducts" resultType="com.et.be.online.domain.ro.ProductRO">
-        select p.product_code,p.product_name,d.discount_percent,p.price,p.feature_image,p.images
-        from product p inner join scene s on p.id = s.product_id
+        select p.product_code,p.product_name,d.discount_percent,p.price,p.feature_image,p.product_url
+        from product p inner join scene s on p.product_code = s.product_code
         left join discount d on p.discount_id = d.id
         where s.scene_type = #{scene_type};
     </select>
 
     <select id="getSingleProduct" resultType="com.et.be.online.domain.ro.ProductRO">
-        select p.product_code,p.product_name,d.discount_percent,p.price,p.feature_image,p.images
+        select p.product_code,p.product_name,d.discount_percent,p.price,p.feature_image,p.product_url,p.product_desc
         from product p
         left join discount d on p.discount_id = d.id
         where p.product_code = #{product_code};
+    </select>
+
+    <select id="getProductManagementList" resultType="com.et.be.online.domain.vo.ProductManagementListVO">
+        select g.category_name category,p.product_code,p.product_desc,p.product_name,p.price,v.quantity inventory,d.discount_percent,
+        p.feature_image,p.SKU,p.created_at ,p.modified_at,p.category_id,p.discount_id,p.product_url
+        from product p
+        left join product_category g on p.category_id = g.id
+        left join product_inventory v on p.inventory_id = v.id
+        left join discount d on p.discount_id = d.id
+        <where>
+            1=1
+            <if test="productName != null and productName != ''">
+               AND p.product_name = #{productName}
+            </if>
+        </where>
+        order by p.modified_at desc
+    </select>
+
+    <select id="getOnlineProductList" resultType="com.et.be.online.domain.ro.ProductRO">
+        select p.product_code,p.product_name,d.discount_percent,p.price,p.feature_image,p.product_url
+        from product p
+        left join discount d on p.discount_id = d.id
     </select>
 
 </mapper>

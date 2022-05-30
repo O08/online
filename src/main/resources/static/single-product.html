@@ -224,9 +224,9 @@
 									<div class="cart-form__item quantity quantity">
 										<label for="quantity">Qty:</label>
 										<select id="quantity" class="select-style qty js-qty">
-											<option value="usd">1</option>
-											<option value="eur">2</option>
-											<option value="gbr">3</option>
+											<option value="1">1</option>
+											<option value="2">2</option>
+											<option value="3">3</option>
 										</select>
 									</div>
 
@@ -239,7 +239,7 @@
 									</div>
 								</form>
 
-								<a href="cart.html" class="btn btn-primary btn-lg add_to_cart_button">Add to cart</a>
+								<a href="#" class="btn btn-primary btn-lg add_to_cart_button">Add to cart</a>
 
 								<div class="product-summary__featured">
 									<div class="row">
@@ -305,67 +305,6 @@
 					<div class="container">
 						<h2 class="section-title text-center h3">Other items you may like</h2>
 						<ul class="products featured-products columns-5">
-							<li class="product">
-								<div class="product-thumb">
-									<span class="onsale">-30%</span>
-									<a href="single-product.html" class="product-thumb__link">
-										<img src="images/01_home_page_005.jpg" alt="">
-										<span class="btn btn-outline-light shop-link">Shop</span>
-									</a>
-								</div>
-								<div class="product-title"><a href="single-product.html">Cogen warm lamp</a></div>
-								<div class="price">
-									<span class="amount">$56.00</span>
-								</div>
-							</li>
-							<li class="product">
-								<div class="product-thumb">
-									<a href="single-product.html" class="product-thumb__link">
-										<img src="images/02_catalogue_page_010.jpg" alt="">
-										<span class="btn btn-outline-light shop-link">Shop</span>
-									</a>
-								</div>
-								<div class="product-title"><a href="single-product.html">Green Card pen</a></div>
-								<div class="price">
-									<span class="amount">$12.00</span>
-								</div>
-							</li>
-							<li class="product">
-								<div class="product-thumb">
-									<a href="single-product.html" class="product-thumb__link">
-										<img src="images/02_catalogue_page_011.jpg" alt="">
-										<span class="btn btn-outline-light shop-link">Shop</span>
-									</a>
-								</div>
-								<div class="product-title"><a href="single-product.html">CONFETTI LAMP</a></div>
-								<div class="price">
-									<span class="amount">$45.00</span>
-								</div>
-							</li>
-							<li class="product">
-								<div class="product-thumb">
-									<a href="single-product.html" class="product-thumb__link">
-										<img src="images/02_catalogue_page_012.jpg" alt="">
-										<span class="btn btn-outline-light shop-link">Shop</span>
-									</a>
-								</div>
-								<div class="product-title"><a href="single-product.html">HOT TABLET COVER</a></div>
-								<div class="price">
-									<span class="amount">$20.00</span>
-								</div>
-							</li>
-							<li class="product">
-								<div class="product-thumb">
-									<a href="single-product.html" class="product-thumb__link">
-										<img src="images/02_catalogue_page_008.jpg" alt="">
-										<span class="btn btn-outline-light shop-link">Shop</span>
-									</a>
-								</div>
-								<div class="product-title"><a href="single-product.html">COSMO ICE BOTTLE</a></div>
-								<div class="price">
-									<span class="amount">$27.00</span>
-								</div>
-							</li>
 						</ul>
 					</div>
 				</section>
@@ -420,7 +359,7 @@
 			</nav>
 
 			<div class="footer-bottom">
-				<div class="copyright">Copyright &copy; 2020.Company name All rights reserved.<a target="_blank" href="http://sc.chinaz.com/moban/">&#x7F51;&#x9875;&#x6A21;&#x677F;</a></div>
+				<div class="copyright">Copyright &copy; 2020.Company name All rights reserved.</div>
 				<ul class="footer-bottom__menu">
 					<li><a href="#">Privacy Policy</a></li>
 					<li><a href="#">Terms of use</a></li>
@@ -444,6 +383,39 @@
 			</form>
 		</div>
 	</div>
+	<div class="product-card-template d-none">
+		<div id="featuredProductCard-template-with-discount">
+			<li class="product">
+				<div class="product-thumb">
+					<span class="onsale">#{discount}</span>
+					<a href="#{productUrl}" class="product-thumb__link">
+						<img src="#{featuredImageUrl}" alt="">
+						<span class="btn btn-outline-light shop-link">Shop</span>
+					</a>
+				</div>
+				<div class="product-title"><a href="#{featuredImageUrl}">#{productName}</a></div>
+				<div class="price">
+					<ins><span class="amount">$#{discountPrice}</span></ins>
+					<del><span class="amount">$#{price}</span></del>
+				</div>
+			</li>
+		</div>
+		<div id="featuredProductCard-template-No-discount">
+			<li class="product">
+				<div class="product-thumb">
+					<a href="#{productUrl}" class="product-thumb__link">
+						<img src="#{featuredImageUrl}" alt="">
+						<span class="btn btn-outline-light shop-link">Shop</span>
+					</a>
+				</div>
+				<div class="product-title"><a href="#{productUrl}">#{productName}</a></div>
+				<div class="price">
+					<span class="amount">$#{price}</span>
+				</div>
+			</li>
+		</div>
+
+	</div>
 	<!-- Libs -->
 	<script src="libs/jquery-2.2.3.min.js"></script>
 	<script src="libs/bootstrap-4.3.1/js/bootstrap.min.js"></script>
@@ -452,5 +424,9 @@
 
 	<!-- Theme -->
 	<script src="assets/js/custom.js"></script>
+	<script src="assets/js/saleos.js"></script>
+	<script>
+		window.onload = recommendProducts();
+	</script>
 </body>
 </html>
