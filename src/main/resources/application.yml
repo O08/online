@@ -48,9 +48,9 @@ mybatis-plus:
     call-setters-on-nulls: true
 
 app:
-  url: &app.url http://localhost:8081
+  url: http://localhost:8081
 file:
-  uploadPath: &file.uploadPath images/
+  uploadPath: images/
   directoryMapping: /xechat/
   staticAccessPath: /**
   accessAddress: http://localhost:8081/images/

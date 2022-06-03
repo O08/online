@@ -7,9 +7,7 @@ import com.egzosn.pay.spring.boot.core.configurers.PayMessageConfigurer;
 import com.egzosn.pay.spring.boot.core.merchant.PaymentPlatform;
 import com.egzosn.pay.spring.boot.core.provider.merchant.platform.AliPaymentPlatform;
 import com.egzosn.pay.spring.boot.core.provider.merchant.platform.PaymentPlatforms;
-import com.egzosn.pay.spring.boot.core.provider.merchant.platform.WxPaymentPlatform;
 import com.et.be.config.handlers.AliPayMessageHandler;
-import com.et.be.config.handlers.WxPayMessageHandler;
 import com.et.be.config.interceptor.AliPayMessageInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
@@ -115,6 +113,6 @@ public class MerchantPayServiceConfigurer implements PayServiceConfigurer {
         PaymentPlatform aliPaymentPlatform = PaymentPlatforms.getPaymentPlatform(AliPaymentPlatform.platformName);
         configurer.addHandler(aliPaymentPlatform, aliPayMessageHandler);
         configurer.addInterceptor(aliPaymentPlatform, spring.getBean(AliPayMessageInterceptor.class));
-        configurer.addHandler(PaymentPlatforms.getPaymentPlatform(WxPaymentPlatform.platformName), new WxPayMessageHandler());
+//        configurer.addHandler(PaymentPlatforms.getPaymentPlatform(WxPaymentPlatform.platformName), new WxPayMessageHandler());
     }
 }
