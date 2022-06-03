@@ -76,9 +76,7 @@ kuaidi100:
   key: ${kuaidi100_key}
   customer: ${kuaidi100_customer}
 
-auth:
-  PrivateKey: ${auth.PrivateKey}
-  PublicKey: ${auth.PublicKey}
+
 
 
 
