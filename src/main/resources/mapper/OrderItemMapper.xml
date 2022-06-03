@@ -9,4 +9,12 @@
         id,order_id,product_id,quantity,created_at,modified_at
     </sql>
 
+    <select id="orderHistory" resultType="com.et.be.online.domain.vo.OrderHistoryVO">
+        select p.product_name,p.feature_image,p.product_url,o.sub_total,o.tax,o.shipping,o.created_at
+        from product p
+        inner join order_item o on p.product_code = o.product_code
+        inner join order_details s on o.order_id = s.id
+        where s.user_id = #{user_id};
+    </select>
+
 </mapper>

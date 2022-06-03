@@ -47,6 +47,9 @@ public class OrderDetails extends Model<OrderDetails> implements Serializable {
      * 支付
      */
     private Long paymentId;
+
+
+
     /**
      * 创建日期
      */

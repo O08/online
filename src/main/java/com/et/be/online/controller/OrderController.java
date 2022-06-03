@@ -1,7 +1,6 @@
 package com.et.be.online.controller;
 
 import com.et.be.inbox.domain.vo.ResponseVO;
-import com.et.be.online.constant.SceneConstant;
 import com.et.be.online.service.OrderService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -31,5 +30,12 @@ public class OrderController {
     @PostMapping(value = "newOrder")
     public ResponseVO newOrder(Long addressId) {
         return new ResponseVO( orderService.newOrder(addressId));
+    }
+
+    @ApiOperation("历史订单")
+    @ResponseBody
+    @PostMapping(value = "orderHistory")
+    public ResponseVO orderHistory() {
+        return new ResponseVO( orderService.orderHistory());
     }
 }

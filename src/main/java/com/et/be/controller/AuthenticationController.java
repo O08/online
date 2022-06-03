@@ -3,6 +3,7 @@ package com.et.be.controller;
 
 import com.et.be.inbox.domain.vo.ResponseVO;
 import com.et.be.inbox.utils.SecureCheckUtil;
+import com.et.be.online.domain.dto.CustomerDTO;
 import com.et.be.online.domain.mo.PublicKeyInfo;
 import com.et.be.online.service.CustomerService;
 import io.swagger.annotations.Api;
@@ -40,7 +41,26 @@ public class AuthenticationController {
         return new ResponseVO( customerService.doSignUp(signUpInfo));
     }
 
+    @ApiOperation("修改name")
+    @ResponseBody
+    @PostMapping(value = "doEditName")
+    public ResponseVO doEditName(CustomerDTO customerDTO) {
+        return new ResponseVO( customerService.doEditName(customerDTO));
+    }
 
+    @ApiOperation("修改password")
+    @ResponseBody
+    @PostMapping(value = "doEditPassword")
+    public ResponseVO doEditPassword(String encrypted ) {
+        String customerDTO = SecureCheckUtil.decryptIdentity(encrypted);
+        return new ResponseVO( customerService.doEditPassword(customerDTO));
+    }
 
+    @ApiOperation("修改phone")
+    @ResponseBody
+    @PostMapping(value = "doEditPhone")
+    public ResponseVO doEditPhone(CustomerDTO customerDTO) {
+        return new ResponseVO( customerService.doEditPhone(customerDTO));
+    }
 
 }

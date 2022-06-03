@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="shortcut icon" href="images/favicon.png" type="image/x-icon">
 
-    <title>Shop</title>
+    <title>Taffle</title>
 
     <!-- Fonts -->
     <link rel="stylesheet" href="assets/fonts/Lato/Lato.css">
@@ -17,17 +17,18 @@
 
     <!-- Libs -->
     <link rel="stylesheet" href="libs/bootstrap-4.3.1/css/bootstrap.min.css">
-    <link rel="stylesheet" href="libs/select2/css/select2.min.css">
-    <link rel="stylesheet" href="libs/slick/slick.css">
+
 
     <!-- Theme -->
     <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/saleos.css">
     <meta name="theme-color" content="#ECECEC">
 </head>
-<body>
+<body class="home">
+
 <div class="head-line"></div>
 
-<header class="page-header">
+<header class="page-header header-home">
     <div class="container">
         <div class="top-bar row align-items-center">
             <div class="search col-lg-4">
@@ -41,59 +42,36 @@
             </div>
 
             <div class="logo col-lg-4">
-                <a href="#"><img src="images/logo.png" alt=""></a>
+                <a href="index.html"><img src="images/7norm-logo-black.png" alt=""></a>
             </div>
-
             <div class="quick-access-menu col-lg-4">
-                <div class="quick-access__item">
-                    <div class="select-currency">
-                        <select class="select-style js-select2">
-                            <option value="usd">USD</option>
-                        </select>
+                <div class="quick-access__item nav-sign-in">
+                    <a href="authentication.html?authType=signin"><span>Sign in</span></a>
+                </div>
+                <div class="quick-access__item nav-sign-up">
+                    <a href="authentication.html"><span>Sign up</span></a>
+                </div>
+                <div class="quick-access__item quick-access__item_border-r nav-account-container">
+                    <div class="header-nav-account">
+                        <a href="#"><span class="account"><i class="flaticon-messenger-user-avatar fi-2x"></i></span></a>
+                        <div class="nav-account">
+                            <a href="account-security.html" class="nav-dropdown-item margin-top15"><span>My acount</span></a>
+                            <a href="order-history.html" class="nav-dropdown-item "><span>My order</span></a>
+                            <a href="/api/v1/auth/logout" class="nav-dropdown-item "><span>Sign out</span></a>
+                        </div>
                     </div>
                 </div>
-                <div class="quick-access__item quick-access__item_border-r">
-                    <a href=""><span class="account"><i class="flaticon-messenger-user-avatar fi-2x"></i></span></a>
-                </div>
+
                 <div class="quick-access__item">
                     <div class="header-mini-cart">
                         <a href="cart.html" class="mini-cart-link">
                             <i class="cart__icon flaticon-online-shopping-cart fi-2x"></i>
-                            <span class="mini-cart-link__qty">2 items</span>
+                            <span class="mini-cart-link__qty">0 items</span>
                         </a>
-
                         <div class="mini-cart">
-                            <div class="mini-cart__header">Your cart</div>
                             <div class="mini-cart__content">
-                                <ul class="mini-cart-list">
-                                    <li class="mini-cart-item">
-                                        <div class="mini-cart-item__thumb">
-                                            <a href="single-product.html">
-                                                <img src="images/mini-cart-product-1.jpg" alt="">
-                                            </a>
-                                        </div>
-                                        <div class="mini-cart-item__content">
-                                            <div class="mini-cart-item__title"><a href="single-product.html">Origami lamp</a></div>
-                                            <span class="amount">$21.00</span>
-                                        </div>
-                                    </li>
-                                    <li class="mini-cart-item">
-                                        <div class="mini-cart-item__thumb">
-                                            <a href="single-product.html">
-                                                <img src="images/mini-cart-product-2.jpg" alt="">
-                                            </a>
-                                        </div>
-                                        <div class="mini-cart-item__content">
-                                            <div class="mini-cart-item__title"><a href="single-product.html">Monaco collection watch</a></div>
-                                            <span class="amount">$132.00</span>
-                                        </div>
-                                    </li>
-                                </ul>
-                                <div class="mini-cart__subtotal d-flex flex-wrap justify-content-between">
-                                    <span>Subtotal</span>
-                                    <span>$153.00</span>
-                                </div>
-                                <a href="checkout.html" class="btn btn-primary btn-lg btn-block mini-cart__btn">checkout</a>
+                                <div class="empty-message">You have no items in your cart</div>
+                                <a href="shop.html" class="btn btn-primary btn-lg mini-cart__btn">shop more</a>
                             </div>
                             <div class="mini-cart__footer">
                                 <div class="icon-box icon-box-left justify-content-center">
@@ -115,10 +93,10 @@
 
             <ul class="nav justify-content-center">
                 <li class="nav-item">
-                    <a class="nav-link" href="index.html">Home</a>
+                    <a class="nav-link active" href="index.html">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" href="shop.html">Shop</a>
+                    <a class="nav-link" href="shop.html">Shop</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="promo.html">Promo</a>
@@ -135,37 +113,30 @@
                     </ul>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="blog.html">Blog</a>
-                </li>
-                <li class="nav-item">
                     <a class="nav-link" href="contact.html">Contact</a>
                 </li>
             </ul>
         </nav>
-    </div> <!-- end of container -->
+    </div>
 </header>
 
-<div class="page-wrap archive shop">
-    <!-- Breadcrumbs -->
-    <nav aria-label="breadcrumb" class="page-breadcrumb">
-        <div class="container">
-            <span>Search Result:</span>
-            <ol class="breadcrumb">
-<!--                <li class="breadcrumb-item"><a href="/">Home</a></li>-->
-<!--                <li class="breadcrumb-item active" aria-current="page">Search</li>-->
-            </ol>
-        </div>
-    </nav>
-
+<div class="page-wrap" id="page">
     <div class="page-content">
-        <main class="main-content">
-            <div class="container">
-                <ul class="products columns-4" id="search-result-ul">
-
-                </ul>
+        <div class="row">
+            <div class="col-lg-2">
 
             </div>
-        </main>
+            <div class="col-lg-2 aside">
+            </div>
+            <div class="col-lg-6">
+                <div class="shipping-info">
+                    <span>aaaaaa</span>
+                </div>
+            </div>
+            <div class="col-lg-2">
+
+            </div>
+        </div>
     </div>
 </div>
 
@@ -174,7 +145,7 @@
         <div class="foot-info row">
             <div class="col-md-8">
                 <div class="d-lg-flex align-items-end text-center text-md-left">
-                    <a href="/" class="logo-footer">
+                    <a href="/" class="logo">
                         <img src="images/logo-white.png" alt="">
                     </a>
                     <div class="ml-lg-4 page-footer__text">Is a design-focused wordpress theme for unique products</div>
@@ -188,6 +159,7 @@
                     <li><a href="#"><i class="mdi mdi-facebook"></i></a></li>
                     <li><a href="#"><i class="mdi mdi-instagram"></i></a></li>
                     <li><a href="#"><i class="mdi mdi-twitter"></i></a></li>
+                    <li><a href="https://www.youtube.com/channel/UCF0FWUGaCZdynP-HfK7Uz5g/featured"><i class="mdi mdi-youtube-play"></i></a></li>
                 </ul>
             </div>
         </div>
@@ -225,65 +197,37 @@
     </div>
 </footer>
 
-<div id="js-back-to-top" class="back-to-top"><i class="flaticon-up-arrow-sign"></i> Page top</div>
 
 <div class="full-search-wrap">
     <div class="full-search container">
         <div class="close-s float-right js-close-search flaticon-cancel-button fi-2x"></div>
-        <form action="/" class="search-full-form">
+        <form action="search-result.html" class=" search-full-form">
             <div class="position-relative">
                 <i class="search-icon flaticon-magnifying-glass-browser fi-2x"></i>
-                <input type="text" id="s-full" class="search-full-form__input" placeholder="Search">
+                <input type="text" id="s-full" name="keyword" class="search-full-form__input" placeholder="Search">
                 <input type="submit" class="d-none">
             </div>
             <p class="hint">Type in your search and press enter</p>
         </form>
     </div>
 </div>
-<div class="product-card-template d-none">
-    <div id="featuredProductCard-template-with-discount">
-        <li class="product">
-            <div class="product-thumb">
-                <span class="onsale">#{discount}</span>
-                <a href="#{productUrl}" class="product-thumb__link">
-                    <img src="#{featuredImageUrl}" alt="">
-                    <span class="btn btn-outline-light shop-link">Shop</span>
-                </a>
-            </div>
-            <div class="product-title"><a href="#{featuredImageUrl}">#{productName}</a></div>
-            <div class="price">
-                <ins><span class="amount">$#{discountPrice}</span></ins>
-                <del><span class="amount">$#{price}</span></del>
-            </div>
-        </li>
-    </div>
-    <div id="featuredProductCard-template-No-discount">
-        <li class="product">
-            <div class="product-thumb">
-                <a href="#{productUrl}" class="product-thumb__link">
-                    <img src="#{featuredImageUrl}" alt="">
-                    <span class="btn btn-outline-light shop-link">Shop</span>
-                </a>
-            </div>
-            <div class="product-title"><a href="#{productUrl}">#{productName}</a></div>
-            <div class="price">
-                <span class="amount">$#{price}</span>
-            </div>
-        </li>
-    </div>
 
-</div>
+<div id="js-back-to-top" class="back-to-top"><i class="flaticon-up-arrow-sign"></i> Page top</div>
+
+
 <!-- Libs -->
 <script src="libs/jquery-2.2.3.min.js"></script>
 <script src="libs/bootstrap-4.3.1/js/bootstrap.min.js"></script>
-<script src="libs/select2/js/select2.min.js"></script>
-<script src="libs/slick/slick.min.js"></script>
+<script src="https://cdn.staticfile.org/vue/2.4.2/vue.min.js"></script>
+<script src="libs/jsencrypt.min.js"></script>
+
 
 <!-- Theme -->
 <script src="assets/js/custom.js"></script>
-<script src="assets/js/saleos.js"></script>
-<script>
-		window.onload = showSearchProducts();
-	</script>
+
+<!-- logic -->
+<script src="assets/js/account-security.js"></script>
+
+
 </body>
 </html>

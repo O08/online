@@ -9,4 +9,12 @@
         id,product_name,product_desc,SKU,category_id,inventory_id,price,discount_id,created_at,modified_at,deleted_at
     </sql>
 
+    <select id="searchProduct" resultType="com.et.be.online.domain.ro.ProductRO">
+        select p.product_code,p.product_name,d.discount_percent,p.price,p.feature_image,p.product_url
+        from product p
+        left join discount d on p.discount_id = d.id
+        left join product_category g on p.category_id = g.id
+        where  INSTR(p.product_name,#{keyword})>0 or INSTR(g.category_name,#{keyword})>0
+    </select>
+
 </mapper>

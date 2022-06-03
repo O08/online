@@ -28,9 +28,9 @@ public class ExpressDeleveryController {
     @ApiOperation("运单查询")
     @ResponseBody
     @PostMapping(value = "trackShipment")
-    public ResponseVO trackShipment(String shipNO) throws Exception {
+    public ResponseVO trackShipment(Long shipmentId) throws Exception {
 
-        return new ResponseVO(shipmentService.getShipment(shipNO));
+        return new ResponseVO(shipmentService.getShipment(shipmentId));
     }
 
     @ApiOperation("配送地址查询")

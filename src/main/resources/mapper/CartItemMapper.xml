@@ -10,7 +10,7 @@
     </sql>
 
     <select id="cart" resultType="com.et.be.online.domain.vo.CartItemVO">
-        select p.product_code,p.product_name,d.discount_percent,p.price,p.feature_image,p.product_url,t.quantity
+        select p.product_code,p.product_name,d.discount_percent,p.price,p.feature_image,p.product_url,t.quantity,p.weight
         from product p
         left join discount d on p.discount_id = d.id
         inner join cart_item t on p.product_code = t.product_code

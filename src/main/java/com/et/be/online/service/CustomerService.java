@@ -1,5 +1,6 @@
 package com.et.be.online.service;
 
+import com.et.be.online.domain.dto.CustomerDTO;
 import com.et.be.online.domain.mo.Customer;
 
 public interface CustomerService {
@@ -14,4 +15,9 @@ public interface CustomerService {
 
     Customer getCustomerByEmail(String email);
 
+    int doEditName(CustomerDTO customerDTO);
+
+    int doEditPassword(String customerDTO);
+
+    int doEditPhone(CustomerDTO customerDTO);
 }

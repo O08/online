@@ -23,13 +23,13 @@ public class ShipmentServiceImpl implements ShipmentService {
 
     /**
      * 订单运单查询
-     * @param shipNo 运单号
+     * @param shipmentId 运单id
      * @return
      */
     @Override
-    public Shipment getShipment(String shipNo) throws Exception {
+    public Shipment getShipment(Long shipmentId) throws Exception {
         QueryWrapper<Shipment> queryWrapper = Wrappers.query();
-        queryWrapper.eq("ship_no",shipNo);
+        queryWrapper.eq("id",shipmentId);
         Shipment shipment = shipmentMapper.selectOne(queryWrapper);
         // 控制每一单查询频率至少在半小时以上，否则会造成锁单。 当前设置为1h
         boolean interval1h = DateUtil.isIn(new Date(),shipment.getModifydate(),
@@ -40,7 +40,7 @@ public class ShipmentServiceImpl implements ShipmentService {
         }
         // 间隔大于一小时 请求最新数据 更新平台数据
         HttpResult httpResult = deleveryUtil.queryDelevery(shipment.getSupplier(), shipment.getShipNo(), shipment.getReceiverPhone());
-        shipment.setTrackers(httpResult.toString());
+        shipment.setTrackers(httpResult.getBody());
         shipmentMapper.updateById(shipment);
 
         return shipment;

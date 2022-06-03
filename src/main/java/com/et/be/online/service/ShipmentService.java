@@ -5,10 +5,10 @@ import com.et.be.online.domain.mo.Shipment;
 public interface ShipmentService {
     /**
      * 获取运单信息
-     * @param shipNo 运单号
+     * @param shipmentId 运单id
      * @return
      */
-    Shipment getShipment(String shipNo) throws Exception;
+    Shipment getShipment(Long shipmentId) throws Exception;
 
     /**
      * 创建订单的运单信息

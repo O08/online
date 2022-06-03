@@ -2,7 +2,11 @@ package com.et.be.online.mapper;
 
 import com.et.be.online.domain.mo.OrderItem;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.et.be.online.domain.vo.OrderHistoryVO;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
  * (order_item)数据Mapper
@@ -13,5 +17,5 @@ import org.apache.ibatis.annotations.Mapper;
 */
 @Mapper
 public interface OrderItemMapper extends BaseMapper<OrderItem> {
-
+    List<OrderHistoryVO> orderHistory(@Param("user_id") Long userId);
 }

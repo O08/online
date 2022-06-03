@@ -83,6 +83,10 @@ public class Product extends Model<Product> implements Serializable {
      */
     private String productUrl;
 
+    /**
+     * 单项商品重量
+     */
+    private int weight;
 
 
 }

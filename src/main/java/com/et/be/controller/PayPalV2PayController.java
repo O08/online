@@ -13,6 +13,8 @@ import com.egzosn.pay.paypal.v2.bean.order.AddressPortable;
 import com.egzosn.pay.paypal.v2.bean.order.Name;
 import com.egzosn.pay.paypal.v2.bean.order.ShippingDetail;
 import com.egzosn.pay.web.support.HttpRequestNoticeParams;
+import com.et.be.inbox.domain.vo.ResponseVO;
+import com.et.be.online.enums.PayCodeEnum;
 import com.et.be.online.service.OrderService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,7 +55,7 @@ public class PayPalV2PayController {
         storage.setClientSecret("EK2YaOrw3oLSDWIRzvb9BWGTjiPPhY1fFUu5ylhUsGYLc_h_dlpJ0hr_LDEkbO9MyKP2P83YcywbPaem");
         storage.setTest(true);
         //发起付款后的页面转跳地址
-        storage.setReturnUrl("http://127.0.0.1:8081/payPalV2/payBack.json");
+        storage.setReturnUrl("http://127.0.0.1:8081/payPalV2/payBackBefore.json");
         // 注意：这里不是异步回调的通知 IPN 地址设置的路径：https://developer.paypal.com/developer/ipnSimulator/
         //取消按钮转跳地址,
         storage.setCancelUrl("http://127.0.0.1:8081/payPalV2/cancel");
@@ -73,12 +75,15 @@ public class PayPalV2PayController {
     @RequestMapping(value = "toPay.html", produces = "text/html;charset=UTF-8")
     public String toPay(Long orderDetailsId) {
         PayPalOrder payPalOrder = orderService.newPayPalOrder(orderDetailsId);
-
+         // 创建支付订单
         String toPayHtml = service.toPay(payPalOrder);
 
         //某些支付下单时无法设置单号，通过下单后返回对应单号，如 paypal，友店。
         String tradeNo = payPalOrder.getTradeNo();
+
         System.out.println("支付订单号：" + tradeNo + "  这里可以进行回存");
+        // 回存交易流水 订单与支付流水进行关联
+        orderService.newPaymentDetails(orderDetailsId,tradeNo);
 
         return toPayHtml;
     }
@@ -122,16 +127,11 @@ public class PayPalV2PayController {
      * @throws IOException IOException
      */
     @GetMapping(value = "payBackBefore.json")
-    public String payBackBefore(HttpServletRequest request) throws IOException {
-        try (InputStream is = request.getInputStream()) {
-            // 参数解析与校验  https://developer.paypal.com/docs/api-basics/notifications/ipn/IPNIntro/#id08CKFJ00JYK
-            if (service.verify(service.getParameter2Map(request.getParameterMap(), is))) {
-                // TODO 这里进行成功后的订单业务处理
-                // TODO 返回成功付款页面，这个到时候再做一个漂亮的页面显示，并使用前后端分离的模式
-                return service.successPayOutMessage(null).toMessage();
-            }
-        }
-        return "failure";
+    public void payBackBefore(HttpServletRequest request,HttpServletResponse response) throws IOException {
+        NoticeParams noticeParams = service.getNoticeParams(new HttpRequestNoticeParams(request));
+        // 日志记录
+        log.info("###paypal payBackBefore ###params:{}", noticeParams.toString());
+        response.sendRedirect("/pay-result.html?payResult=success");
     }
 
 
@@ -153,10 +153,26 @@ public class PayPalV2PayController {
      *
      */
     @RequestMapping(value = "payBack.json")
-    public void payBack(HttpServletRequest request,HttpServletResponse response) throws IOException {
+    public String payBack(HttpServletRequest request)  {
         //业务处理在对应的PayMessageHandler里面处理，在哪里设置PayMessageHandler，详情查看com.egzosn.pay.common.api.PayService.setPayMessageHandler()
-         service.payBack(new HttpRequestNoticeParams(request)).toMessage();
-        response.sendRedirect("/pay-result.html");
+        return service.payBack(new HttpRequestNoticeParams(request)).toMessage();
+    }
+
+
+    @RequestMapping(value = "cancel")
+    public void cancelPaypalPay(HttpServletRequest request,HttpServletResponse response) throws IOException {
+
+        //1.获取支付宝回调参数
+        log.info("paypal取消支付回调********************************");
+
+        NoticeParams noticeParams = service.getNoticeParams(new HttpRequestNoticeParams(request));
+        // 日志记录
+        log.info("###paypal取消支付 ###params:{}", noticeParams.toString());
+        // 2.验签操作,参考支付宝Demo的return_url.jsp
+
+        boolean signVerified = service.verify(noticeParams);
+
+        response.sendRedirect("/pay-result.html?payResult=error");
     }
 
 
@@ -178,6 +194,8 @@ public class PayPalV2PayController {
             String saleState=(String) noticeParams.getBody().get("resource");
 
             if(saleState.equalsIgnoreCase("completed")) {
+                // 支付成功 处理逻辑
+//                orderService.dealSuccess();
                 response.setStatus(200);
                 return;
 

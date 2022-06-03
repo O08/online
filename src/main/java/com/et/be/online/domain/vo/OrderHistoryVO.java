@@ -6,25 +6,28 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
-/**
- * 购物车
- */
+import java.util.Date;
+
 @Data
-@ApiModel(value = "购物车", description = "商品场景")
+@ApiModel(value = "历史订单返回", description = "商品场景")
 @Accessors(chain = true)
 @NoArgsConstructor
-public class CartItemVO {
-    @ApiModelProperty("产品码")
-    private String productCode;
+public class OrderHistoryVO {
+    @ApiModelProperty("下单时间")
+    private Date createdAt;
+
+    @ApiModelProperty("商品小计")
+    private Double subTotal;
+
+    @ApiModelProperty("税")
+    private Double tax;
+
+    @ApiModelProperty("配送费")
+    private Double shipping;
 
     @ApiModelProperty("产品名称")
     private String productName;
 
-    @ApiModelProperty("折扣")
-    private Double  discountPercent;
-
-    @ApiModelProperty("商品原价")
-    private Double  price;
 
     @ApiModelProperty("商品封面图片")
     private String featureImage;
@@ -32,11 +35,6 @@ public class CartItemVO {
     @ApiModelProperty("商品Url")
     private String productUrl;
 
-    @ApiModelProperty("商品数量")
-    private Integer  quantity;
-    @ApiModelProperty("商品重量")
-    private Integer  weight;
-
-
-
+    @ApiModelProperty("订单编号")
+    private String no;
 }

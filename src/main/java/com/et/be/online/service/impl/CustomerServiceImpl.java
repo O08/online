@@ -3,7 +3,9 @@ package com.et.be.online.service.impl;
 import cn.hutool.core.bean.BeanUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.et.be.config.security.UserInfo;
 import com.et.be.online.constant.OptConstant;
+import com.et.be.online.domain.dto.CustomerDTO;
 import com.et.be.online.domain.mo.Customer;
 import com.et.be.online.domain.mo.LoginInfo;
 import com.et.be.online.domain.mo.ShoppingSession;
@@ -68,5 +70,45 @@ public class CustomerServiceImpl implements CustomerService {
         wrapper.eq("email",email);
         Customer customer = customerMapper.selectOne(wrapper);
         return customer;
+    }
+
+    @Override
+    public int doEditName(CustomerDTO customerDTO) {
+        Customer customer = new Customer();
+        String email = UserInfo.getUsername();
+        customer.setUsername(customerDTO.getName())
+                .setModifiedAt(new Date());
+        QueryWrapper<Customer> wrapper = Wrappers.query();
+        wrapper.eq("email", email);
+       return customerMapper.update(customer,wrapper);
+    }
+
+    @Override
+    public int doEditPassword(String customerDTO) {
+        Gson gson = new Gson();
+        CustomerDTO customerDTOObj = gson.fromJson(customerDTO, CustomerDTO.class);
+        boolean expired = System.currentTimeMillis() - Long.parseLong(customerDTOObj.getTime()) > OptConstant.TIME_OUT;
+        if(expired){
+            return 0;
+        }
+        String encryptedPassword= new BCryptPasswordEncoder().encode(customerDTOObj.getPassword());
+        Customer customer = new Customer();
+        String email = UserInfo.getUsername();
+        customer.setPassword(encryptedPassword)
+                .setModifiedAt(new Date());
+        QueryWrapper<Customer> wrapper = Wrappers.query();
+        wrapper.eq("email", email);
+        return customerMapper.update(customer,wrapper);
+    }
+
+    @Override
+    public int doEditPhone(CustomerDTO customerDTO) {
+        Customer customer = new Customer();
+        String email = UserInfo.getUsername();
+        customer.setMobile(customerDTO.getPhone())
+                .setModifiedAt(new Date());
+        QueryWrapper<Customer> wrapper = Wrappers.query();
+        wrapper.eq("email", email);
+        return customerMapper.update(customer,wrapper);
     }
 }

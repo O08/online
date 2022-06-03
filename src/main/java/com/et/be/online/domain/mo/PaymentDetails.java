@@ -28,10 +28,7 @@ public class PaymentDetails extends Model<PaymentDetails> implements Serializabl
      */
     @TableId
 	private Long id;
-    /**
-     * orderId
-     */
-    private Long orderId;
+
     /**
      * amount
      */
@@ -40,6 +37,10 @@ public class PaymentDetails extends Model<PaymentDetails> implements Serializabl
      * provider
      */
     private String provider;
+    /**
+     * tradNo 第三方支付流水号
+     */
+    private String tradNo;
     /**
      * status
      */

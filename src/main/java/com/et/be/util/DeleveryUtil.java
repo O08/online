@@ -49,6 +49,13 @@ public class DeleveryUtil {
         return 200.00;
     }
 
+    /**
+     * 简单快递费用计算 以美元计价 kg计量
+     * @return
+     */
+    public static Double averageDeleveryFee(int weight){
+        return 3+45.0*weight/1000;
+    }
 
 
 }

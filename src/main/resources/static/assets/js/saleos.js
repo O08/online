@@ -2,7 +2,11 @@
 * online sale js
 */
 //
-var cartItemTemplate = '<tr class="cart-item"><td class="product-thumbnail"><a href="#{productUrl}"><img width="170"height="240"src="#{featuredImageUrl}"alt=""class="attachment-shop_thumbnail"/></a></td><td class="product-name"><h4><a href="#{productUrl}">#{productName}</a></h4></td><td class="product-price"data-title="Price:"><span class="amount">$#{price}</span></td><td class="product-quantity"data-title="Quantity:"><div class="quantity"><select class="select-style cart-select"data-product="#{productCode}"><option value="1">1</option><option value="2">2</option><option value="3">3</option></select></div></td><td class="product-remove"><button class="remove"data-product="#{productCode}"><i class="flaticon-waste-can"></i><span class="remove__text">Remove</span></button></td><td class="product-subtotal"data-title="Total:"><span class="amount">$#{total}</span></td></tr>'
+var cartItemTemplate = '<tr class="cart-item"><td class="product-thumbnail"><a href="#{productUrl}"><img width="170"height="240"src="#{featuredImageUrl}"alt=""class="attachment-shop_thumbnail"/></a></td><td class="product-name"><h4><a href="#{productUrl}">#{productName}</a></h4></td><td class="product-price"data-title="Price:"><span class="amount">$#{price}</span></td><td class="product-quantity"data-title="Quantity:"><div class="quantity"><select class="select-style cart-select"data-product="#{productCode}"><option value="1">1</option><option value="2">2</option><option value="3">3</option></select></div></td><td class="product-remove"><button class="remove"data-product="#{productCode}"><i class="flaticon-waste-can"></i><span class="remove__text">Remove</span></button></td><td class="product-subtotal"data-title="Total:"><span class="amount">$#{total}</span></td></tr>';
+
+var miniCartItemTemplate = '<li class="mini-cart-item"><div class="mini-cart-item__thumb"><a href="#{productUrl}"><img src="#{featuredImageUrl}"alt=""></a></div><div class="mini-cart-item__content"><div class="mini-cart-item__title"><a href="#{productUrl}">#{productName}</a></div><span class="amount">$#{price}</span></div></li>';
+
+var miniCartTemplate = '<div class="mini-cart__header">Your cart</div><div class="mini-cart__content"><ul class="mini-cart-list">#{miniCartList}</ul><div class="mini-cart__subtotal d-flex flex-wrap justify-content-between"><span>Subtotal</span><span>#{subtotal}</span></div><a href="checkout.html"class="btn btn-primary btn-lg btn-block mini-cart__btn">checkout</a></div><div class="mini-cart__footer"><div class="icon-box icon-box-left justify-content-center"><div class="icon-box__icon"><i class="flaticon flaticon-delivery-truck"></i></div><div class="icon-box__title">Delivery to all regions</div></div></div>';
 
 function getTemplate(keySelector){
    return $(keySelector).html();
@@ -61,7 +65,7 @@ $(".subscribe-form__btn").on( 'click', function() {
           });
 
 
-function loadSingleProducts(current){
+function loadOnlineProducts(current){
            var formData = {
                      current: current,
                      size: $('#per_page').val(),
@@ -96,7 +100,7 @@ function prevpage(prev){
    if(prev == 1){
      return ;
    }
-   loadSingleProducts(prev -1 );
+   loadOnlineProducts(prev -1 );
 }
 
 var totalpage = 0;
@@ -104,7 +108,7 @@ function nextpage(next){
    if(totalpage == next){
      return ;
    }
-   loadSingleProducts(next+1);
+   loadOnlineProducts(next+1);
 
 }
 // pager html
@@ -151,16 +155,16 @@ function pagination(pages,current){
 }
 // go page
 function gopage(page){
- loadSingleProducts(page);
+ loadOnlineProducts(page);
 }
 // shop.html page params change trigger
 $("#per_page").on( 'change', function() {
-             loadSingleProducts(1);
+             loadOnlineProducts(1);
           });
 
 // shop.html  order params change trigger
 $("#order_by").on( 'change', function() {
-             loadSingleProducts(1);
+             loadOnlineProducts(1);
           });
 // contact us
 $(".contact-form__btn").on( 'click', function() {
@@ -366,6 +370,9 @@ $.post('api/v1/shop/cart', function(data) {
                   $('#cart-table tbody').html(cartItemHtml);
                   // show cart subtotal
                   $('#cart-subtotal').html('$'+calculateSubtotal(cartItems));
+                  // show mini cart
+                  showMiniCart();
+
                   // binding event
                   $(".remove").on("click", function (e) {
                      var productCode =  $(this).attr('data-product');
@@ -457,4 +464,77 @@ $(".add_to_cart_button").on("click", function (e) {
           }
           return(false);
  }
+
+function showSearchProducts(){
+ var keyword = getQueryVariable('keyword');
+ if(!keyword){
+   return;
+ }
+$.post('/api/v1/online/search',{keyword: keyword } ,function(data) {
+
+               var searchedProductsHtml ='';
+               var products = data.data;
+                for (var i=0;i<products.length;i++) {
+
+                    searchedProductsHtml =  searchedProductsHtml + getProductCardHtml(products[i]);
+                }
+                $('#search-result-ul').html(searchedProductsHtml);
+
+            })
+              .fail(function(data) {
+                // place error code here
+              });
+}
+// display miniCart
+showMiniCart();
+function showMiniCart(){
+$.post('api/v1/shop/cart', function(data) {
+
+
+                  var cartItems = data.data;
+                  var miniCartListHtml = '';
+                  var miniCartHtml = '';
+                  if($.isEmptyObject(cartItems) ){
+                    return;
+                  }
+
+                  // minicartitem html
+                   for (var i=0;i<cartItems.length;i++) {
+                      var discountPrice = cartItems[i].price*(100-cartItems[i].discountPercent)/100;
+                      miniCartListHtml = miniCartListHtml + miniCartItemTemplate.replaceAll('#{productUrl}',cartItems[i].productUrl)
+                                          .replaceAll('#{featuredImageUrl}',cartItems[i].featureImage)
+                                          .replaceAll('#{productName}',cartItems[i].productName)
+                                          .replaceAll('#{price}',discountPrice*cartItems[i].quantity);
+                   }
+
+                  var subtotal = calculateSubtotal(cartItems);
+
+                  miniCartHtml = miniCartTemplate.replaceAll('#{miniCartList}',miniCartListHtml)
+                                                  .replaceAll('#{subtotal}','$'+subtotal);
+                   // show mini cart quality
+                   $('.mini-cart-link__qty').html(cartItems.length+' items');
+                   $('.mini-cart').html(miniCartHtml);
+            })
+              .fail(function(data) {
+                // place error code here
+                alert('Wooho,Something wrong!')
+              });
+}
+// user basic status
+loginDetect();
+function loginDetect(){
+  // display none my account
+  $('.nav-account-container').toggle();
+  $.post('/api/v1/nav/customer',function(data) {
+               var customer = data.data;
+               if(!!customer.username){
+                 $('.nav-sign-up').toggle();
+                 $('.nav-sign-in').toggle();
+                 $('.nav-account-container').toggle();
+               }
+              })
+                .fail(function(data) {
+                  // place error code here
+                });
+}
 

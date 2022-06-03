@@ -41,6 +41,24 @@ public class OrderItem extends Model<OrderItem> implements Serializable {
      */
     private Long quantity;
     /**
+     * 商品小计
+     */
+    private Double subTotal;
+    /**
+     * 税
+     */
+    private Double tax;
+    /**
+     * 配送费
+     */
+    private Double shipping;
+
+    /**
+     * 配送运单id
+     */
+    private Long shipmentId;
+
+    /**
      * 创建日期
      */
     private Date createdAt;

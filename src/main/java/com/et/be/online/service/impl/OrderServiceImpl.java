@@ -8,9 +8,13 @@ import com.et.be.config.security.UserInfo;
 import com.et.be.online.constant.SysConfigConstant;
 import com.et.be.online.domain.mo.*;
 import com.et.be.online.domain.vo.CartItemVO;
+import com.et.be.online.domain.vo.OrderHistoryVO;
 import com.et.be.online.domain.vo.OrderSummaryVO;
+import com.et.be.online.enums.PaymentProviderEnum;
+import com.et.be.online.enums.PaymentStatusEnum;
 import com.et.be.online.mapper.OrderDetailsMapper;
 import com.et.be.online.mapper.OrderItemMapper;
+import com.et.be.online.mapper.PaymentDetailsMapper;
 import com.et.be.online.mapper.ShoppingSessionMapper;
 import com.et.be.online.service.*;
 import com.et.be.util.DeleveryUtil;
@@ -43,6 +47,9 @@ public class OrderServiceImpl implements OrderService {
     @Autowired
     private CustomerAddressService customerAddressService;
 
+    @Autowired
+    private PaymentDetailsMapper paymentDetailsMapper;
+
     @Override
     public OrderSummaryVO orderSummary() {
         OrderSummaryVO orderSummary = new OrderSummaryVO();
@@ -51,9 +58,11 @@ public class OrderServiceImpl implements OrderService {
         Double subTotal = items.stream().map( item -> item.getQuantity() * item.getPrice()*(100- item.getDiscountPercent())/100 )
                 .mapToDouble(Double::doubleValue).sum();
         // tax
-        Double tax = TaxUtil.calculateTax();
+        Double tax = items.stream().map( item -> TaxUtil.averageTax(item.getQuantity() * item.getPrice()*(100- item.getDiscountPercent())/100))
+                .mapToDouble(Double::doubleValue).sum();
         // shipping fee
-        Double shipping = DeleveryUtil.calculateDeleveryFee();
+        Double shipping = items.stream().map( item -> DeleveryUtil.averageDeleveryFee(item.getQuantity() *item.getWeight()))
+                .mapToDouble(Double::doubleValue).sum();
         Double total = subTotal + tax + shipping;
         orderSummary.setItems(items)
                 .setTax(tax)
@@ -100,9 +109,11 @@ public class OrderServiceImpl implements OrderService {
         Double subTotal = items.stream().map( item -> item.getQuantity() * item.getPrice()*(100- item.getDiscountPercent())/100 )
                 .mapToDouble(Double::doubleValue).sum();
         // tax
-        Double tax = TaxUtil.calculateTax();
+        Double tax = items.stream().map( item -> TaxUtil.averageTax(item.getQuantity() * item.getPrice()*(100- item.getDiscountPercent())/100))
+                .mapToDouble(Double::doubleValue).sum();
         // shipping fee
-        Double shipping = DeleveryUtil.calculateDeleveryFee();
+        Double shipping = items.stream().map( item -> DeleveryUtil.averageDeleveryFee(item.getQuantity() *item.getWeight()))
+                .mapToDouble(Double::doubleValue).sum();
         Double total = subTotal + tax + shipping;
 
 
@@ -119,6 +130,9 @@ public class OrderServiceImpl implements OrderService {
         List<OrderItem> orderItems = items.stream().map(item -> {
             OrderItem orderItem = new OrderItem();
             orderItem.setOrderId(orderDetails.getId())
+                    .setSubTotal(item.getQuantity() * item.getPrice()*(100- item.getDiscountPercent())/100)
+                    .setTax(TaxUtil.averageTax(item.getQuantity() * item.getPrice()*(100- item.getDiscountPercent())/100))
+                    .setShipping(DeleveryUtil.averageDeleveryFee(item.getQuantity() *item.getWeight()))
                     .setProductCode(item.getProductCode())
                     .setQuantity(Long.valueOf(item.getQuantity()))
                     .setCreatedAt(new Date())
@@ -134,5 +148,37 @@ public class OrderServiceImpl implements OrderService {
         ShoppingSession shoppingSession = shoppingSessionMapper.queryShoppingSession(UserInfo.getUsername());
         shoppingSessionMapper.updateShoppingSessionTotalById(shoppingSession.getId(),0.00);
         return orderDetails.getId();
+    }
+
+    @Override
+    public List<OrderHistoryVO> orderHistory() {
+        // get user id
+        Customer customer = customerService.getCustomerByEmail(UserInfo.getUsername());
+        return orderItemService.orderHistory(customer.getId());
+    }
+
+    /**
+     * 支付明细
+     * @param orderDetailsId
+     * @param tradeNo
+     */
+    @Override
+    public void newPaymentDetails(Long orderDetailsId, String tradeNo) {
+        // new payment Detail
+        PaymentDetails paymentDetails = new PaymentDetails();
+        paymentDetails.setProvider(PaymentProviderEnum.PAYPALPAY.name())
+                .setTradNo(tradeNo)
+                .setStatus(PaymentStatusEnum.CREATED.name())
+                .setCreatedAt(new Date())
+                .setModifiedAt(new Date());
+        paymentDetailsMapper.insert(paymentDetails);
+
+        // update order detail payment id
+        OrderDetails orderDetails = new OrderDetails();
+        orderDetails.setPaymentId(paymentDetails.getId())
+                .setId(orderDetailsId)
+                .setModifiedAt(new Date());
+        orderDetailsMapper.updateById(orderDetails);
+
     }
 }
