@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
+import javax.validation.constraints.NotEmpty;
+
 @Data
 @ApiModel(value = "用户地址信息", description = "自服务")
 @Accessors(chain = true)
@@ -38,6 +40,10 @@ public class CustomerAddressVO {
 
     @ApiModelProperty("手机")
     private String mobile;
+
+    @ApiModelProperty("收件人")
+    @NotEmpty
+    private String receiver;
 
     @ApiModelProperty("地址")
     private String fullAddress;

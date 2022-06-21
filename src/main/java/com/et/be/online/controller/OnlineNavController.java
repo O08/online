@@ -1,10 +1,13 @@
 package com.et.be.online.controller;
 
 import cn.hutool.core.bean.BeanUtil;
-import com.et.be.config.security.UserInfo;
-import com.et.be.inbox.domain.vo.ResponseVO;
+
+import com.et.be.base.exception.ErrorCodeException;
+import com.et.be.base.security.UserInfo;
+import com.et.be.base.vo.ResponseVO;
 import com.et.be.online.domain.mo.Customer;
 import com.et.be.online.domain.vo.CustomerVO;
+import com.et.be.online.enums.OnlineCodeEnum;
 import com.et.be.online.service.CustomerService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -35,8 +38,12 @@ public class OnlineNavController {
     @PostMapping(value = "customer")
     public ResponseVO customer() {
         String email = UserInfo.getUsername() ;
+        if("anonymousUser".equals(email)){
+            throw new ErrorCodeException(OnlineCodeEnum.NOT_SIGN_IN);
+        }
         Customer customer = customerService.getCustomerByEmail(email);
         CustomerVO customerVO = new CustomerVO();
+        customer.setPassword(""); // password clean
         if(!BeanUtil.isEmpty(customer)){
             BeanUtil.copyProperties(customer,customerVO);
         }

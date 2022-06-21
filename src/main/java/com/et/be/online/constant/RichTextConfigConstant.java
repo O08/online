@@ -13,5 +13,14 @@ public interface RichTextConfigConstant {
     /**
      *  客户反馈 邮箱模版
      */
-    String TYPE_EMAILHTML_CONTACT_US_T = "1";
+    String TYPE_EMAILHTML_CONTACT_US_T = "3";
+
+    /**
+     * 密码重置
+     */
+    String TYPE_EMAILHTML_PASSWORD_RESET_T = "1";
+    /**
+     * 密码更新成功提示
+     */
+    String TYPE_EMAILHTML_PASSWORD_UPDATED_T = "2";
 }

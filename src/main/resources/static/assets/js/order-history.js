@@ -1,6 +1,7 @@
 var orderHistory_page = new Vue({
     el:'#page',
     data: {
+      showSearchWrap: false,
       orderHistoryList: []
     }
  });
@@ -15,3 +16,7 @@ function loadOrders(){
                   // place error code here
                 });
 }
+
+ function toggleSearch(){
+     orderHistory_page.showSearchWrap = !orderHistory_page.showSearchWrap;
+  }

@@ -34,5 +34,5 @@ public interface SceneMapper extends BaseMapper<Scene> {
   Page<ProductManagementListVO> getProductManagementList(Page page,@Param("productName") String productName);
 
 
-  IPage<ProductRO> getOnlineProductList(Page<ProductVO> page);
+  IPage<ProductRO> getOnlineProductList(Page<ProductVO> page,@Param("categoryId") String categoryId);
 }

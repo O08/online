@@ -33,6 +33,11 @@ public class CustomerAddress extends Model<CustomerAddress> implements Serializa
      */
     private Long userId;
     /**
+     * 收件人
+     */
+    private String receiver;
+
+    /**
      * 地址
      */
     private String addressLine1;

@@ -11,6 +11,7 @@ spring:
     pathmatch:
       matching-strategy: ant_path_matcher
   mail:
+    protocol: smtps
     host: smtp.163.com
     username: ${email}
     password: ${email_token}
@@ -19,11 +20,25 @@ spring:
 
 
   datasource:
+    hikari:
+      # 连接池最大连接数，默认是 10
+      maximum-pool-size: 60
+      # 链接超时时间，默认 30000(30 秒)
+      connection-timeout: 70000
+      # 连接将被测试活动的最大时间量
+      validation-timeout: 3000
+      # 此属性控制池中连接的最长生命周期，值 0 表示无限生命周期，默认 1800000(30 分钟)
+      max-lifetime: 600000
+      # 连接到数据库时等待的最长时间(秒)
+      login-timeout: 5
+      # 池中维护的最小空闲连接数
+      minimum-idle: 10
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: ${mysql_url}
     username: ${mysql_username}
     password: ${mysql_password}
     datasourcetype: com.alibaba.druid.pool.DruidDataSource
+
 
 
 logging:

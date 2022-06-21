@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" href="images/favicon.png" type="image/x-icon">
+
+    <title>Discover</title>
+
+    <!-- Fonts -->
+    <link rel="stylesheet" href="assets/fonts/Lato/Lato.css">
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="assets/fonts/flaticon/flaticon.css">
+    <link rel="stylesheet" href="assets/fonts/webfont/css/materialdesignicons.min.css">
+
+    <!-- Libs -->
+    <link rel="stylesheet" href="libs/bootstrap-4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="libs/select2/css/select2.min.css">
+    <link rel="stylesheet" href="libs/slick/slick.css">
+
+    <!-- Theme -->
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/saleos.css">
+    <style>
+  .video-player {
+    position: relative;
+    padding-bottom: 56.25%;
+    height: 0;
+    overflow: hidden;
+    max-width: 100%;
+    background: #000;
+    margin: 5px;
+  }
+
+  .video-player video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 100;
+    background: transparent;
+  }
+
+  .video-player img {
+    object-fit: cover;
+    display: block;
+    left: 0;
+    bottom: 0;
+    margin: auto;
+    max-width: 100%;
+    width: 100%;
+    position: absolute;
+    right: 0;
+    top: 0;
+    border: none;
+    height: auto;
+    cursor: pointer;
+    -webkit-transition: 0.4s all;
+    -moz-transition: 0.4s all;
+    transition: 0.4s all;
+  }
+
+  .video-player img:hover {
+    -webkit-filter: brightness(75%);
+  }
+
+  .video-player .play {
+    height: 72px;
+    width: 72px;
+    left: 50%;
+    top: 50%;
+    margin-left: -36px;
+    margin-top: -36px;
+    position: absolute;
+    background: url('//i.imgur.com/TxzC70f.png') no-repeat;
+    cursor: pointer;
+  }
+</style>
+    <meta name="theme-color" content="#ECECEC">
+</head>
+<body>
+<div class="head-line"></div>
+
+<header class="page-header">
+    <div class="container">
+        <div class="top-bar row align-items-center">
+            <div class="search col-lg-4">
+                <div class="form-search-toggle js-open-search">
+                    <i class="search-icon flaticon-magnifying-glass-browser fi-2x"></i>
+                    <span>Search</span>
+                </div>
+                <div id="js-open-mob-menu" class="mob-menu-toggle">
+                    <span>Menu</span> <i class="flaticon-menu-options fi-2x"></i>
+                </div>
+            </div>
+
+            <div class="logo col-lg-4">
+                <a href="index.html"><img src="images/logo.png" alt=""></a>
+            </div>
+            <div class="quick-access-menu col-lg-4">
+                <div class="quick-access__item nav-sign-in">
+                    <a href="authentication.html?authType=signin"><span>Sign in</span></a>
+                </div>
+                <div class="quick-access__item nav-sign-up">
+                    <a href="authentication.html"><span>Sign up</span></a>
+                </div>
+                <div class="quick-access__item quick-access__item_border-r nav-account-container">
+                    <div class="header-nav-account">
+                        <a href="#"><span class="account"><i class="flaticon-messenger-user-avatar fi-2x"></i></span></a>
+                        <div class="nav-account">
+                            <a href="account-security.html" class="nav-dropdown-item margin-top15"><span>My acount</span></a>
+                            <a href="order-history.html" class="nav-dropdown-item "><span>My order</span></a>
+                            <a href="/api/v1/auth/logout" class="nav-dropdown-item "><span>Sign out</span></a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="quick-access__item">
+                    <div class="header-mini-cart">
+                        <a href="cart.html" class="mini-cart-link">
+                            <i class="cart__icon flaticon-online-shopping-cart fi-2x"></i>
+                            <span class="mini-cart-link__qty">0 items</span>
+                        </a>
+                        <div class="mini-cart">
+                            <div class="mini-cart__content">
+                                <div class="empty-message">You have no items in your cart</div>
+                                <a href="shop.html" class="btn btn-primary btn-lg mini-cart__btn">shop more</a>
+                            </div>
+                            <div class="mini-cart__footer">
+                                <div class="icon-box icon-box-left justify-content-center">
+                                    <div class="icon-box__icon"><i class="flaticon flaticon-delivery-truck"></i></div>
+                                    <div class="icon-box__title">Delivery to all regions</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- end of quick-access-menu -->
+        </div> <!-- end of top-bar -->
+
+        <nav class="header-navigation">
+            <button class="mob-menu-close" id="js-close-mob-menu">
+                <span>Close</span>
+                <i class="flaticon-cancel-button"></i>
+            </button>
+
+            <ul class="nav justify-content-center">
+                <li class="nav-item">
+                    <a class="nav-link active" href="index.html">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="shop.html">Shop</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="discover.html">Discover</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="about.html">About</a>
+
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="contact.html">Contact</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<div class="page-wrap">
+
+    <section class="section-tab-box">
+        <div class="tab-box">
+        <div class="recommend-tab-group">
+            <div class="tab-item"><a class="tab-item__name active" href="/discover.html" style="">Recommended</a></div>
+            <div class="tab-item"><a class="tab-item__name" href="/discover/news.html" style="">Articles</a></div>
+            <div class="tab-item"><a class="tab-item__name" href="/discover/imagevideo.html" aria-current="page">Videos</a></div>
+            <div class="tab-item"><a class="tab-item__name" href="/discover/newsroom.html" style="">Newsroom</a></div>
+            <div class="tab-item"><a class="tab-item__name" href="/discover/events.html" style="">Events</a></div>
+        </div>
+        </div>
+    </section>
+
+    <!-- Page content -->
+    <div class="page-content">
+        <main class="main-content">
+            <section class="section-discover-channel">
+                <div class="container">
+                    <div class="list-content">
+                        <div class="item-videoandimage">
+                             <div class="video-player" data-id="00001"></div>
+                            <p class="item-videoandimage-title">A tiny story begins in Jun</p>
+                            <div class="item-videoandimage-footer">
+                                <span class="item-videoandimage-footer-time">Jun 15, 2022</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main> <!-- end of main -->
+    </div> <!-- /.page-content -->
+</div> <!-- /.page-wrap -->
+
+
+<footer class="page-footer">
+    <div class="container">
+        <div class="foot-info row">
+            <div class="col-md-8">
+                <div class="d-lg-flex align-items-end text-center text-md-left">
+                    <a href="/" class="logo-footer">
+                        <img src="images/logo-white.png" alt="">
+                    </a>
+                    <div class="ml-lg-4 page-footer__text">Is a online shopping mall  for unique products.</div>
+                </div>
+            </div>
+
+            <div class="social col-md-4">
+                <span>Follow us:</span>
+                <ul class="social-links ml-md-3">
+                    <li><a href="#"><i class="mdi mdi-pinterest"></i></a></li>
+                    <li><a href="#"><i class="mdi mdi-facebook"></i></a></li>
+                    <li><a href="#"><i class="mdi mdi-instagram"></i></a></li>
+                    <li><a href="#"><i class="mdi mdi-twitter"></i></a></li>
+                </ul>
+            </div>
+        </div>
+
+        <nav class="footer-navigation">
+            <ul class="nav justify-content-center">
+                <li class="nav-item">
+                    <a class="nav-link" href="index.html">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="shop.html">Shop</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="discover.html">Discover</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="about.html">About</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="contact.html">Contact</a>
+                </li>
+            </ul>
+        </nav>
+
+        <div class="footer-bottom">
+            <div class="copyright">Copyright &copy; 2022. 7nrom,Inc All rights reserved.</div>
+            <ul class="footer-bottom__menu">
+                <li><a href="https://www.iubenda.com/privacy-policy/40023955">Privacy Policy</a></li>
+                <li><a href="/terms-of-use.html">Terms of use</a></li>
+            </ul>
+        </div>
+    </div>
+</footer>
+
+<div id="js-back-to-top" class="back-to-top"><i class="flaticon-up-arrow-sign"></i> Page top</div>
+
+<div class="full-search-wrap">
+    <div class="full-search container">
+        <div class="close-s float-right js-close-search flaticon-cancel-button fi-2x"></div>
+        <form action="/search-result.html" class=" search-full-form">
+            <div class="position-relative">
+                <i class="search-icon flaticon-magnifying-glass-browser fi-2x"></i>
+                <input type="text" id="s-full" name="keyword" class="search-full-form__input" placeholder="Search">
+                <input type="submit" class="d-none">
+            </div>
+            <p class="hint">Type in your search and press enter</p>
+        </form>
+    </div>
+</div>
+
+
+<!-- Libs -->
+<script src="libs/jquery-2.2.3.min.js"></script>
+<script src="libs/bootstrap-4.3.1/js/bootstrap.min.js"></script>
+<script src="libs/select2/js/select2.min.js"></script>
+<script src="libs/slick/slick.min.js"></script>
+
+<!-- Theme -->
+<script src="assets/js/custom.js"></script>
+<script src="assets/js/saleos.js"></script>
+<script>
+
+
+  function labnolVideo(div) {
+   var base = '/media/video/';
+    var ogg_src = base + div.dataset.id+'.ogg';
+    var mp4_src = base + div.dataset.id+'.mp4';
+    var webm_src = base + div.dataset.id+'.webm';
+    var obj_src = base + div.dataset.id+'.mp4';
+    var embed_src = base + div.dataset.id+'.swf';
+
+    var video = document.createElement('video');
+    video.controls = true;
+    video.autoplay =true;
+
+    var source_ogg = document.createElement('source');
+    source_ogg.setAttribute('src',ogg_src);
+    source_ogg.setAttribute('type','video/ogg');
+    video.appendChild(source_ogg);
+
+
+    var source_mp4 = document.createElement('source');
+    source_mp4.setAttribute('src',mp4_src);
+    source_mp4.setAttribute('type','video/mp4');
+
+    var source_webm = document.createElement('source');
+    source_webm.setAttribute('src',webm_src);
+    source_webm.setAttribute('type','video/webm');
+
+    var objectEle= document.createElement('object');
+    objectEle.setAttribute('data',obj_src);
+
+    var embedEle= document.createElement('embed');
+    embedEle.setAttribute('src',embed_src);
+    objectEle.appendChild(embedEle);
+
+    video.appendChild(source_mp4);
+    video.appendChild(source_webm);
+    video.appendChild(objectEle);
+
+    div.parentNode.replaceChild(video, div);
+  }
+
+  function initVideos() {
+    var playerElements = document.getElementsByClassName('video-player');
+    for (var n = 0; n < playerElements.length; n++) {
+      var videoId = playerElements[n].dataset.id;
+      var div = document.createElement('div');
+      div.setAttribute('data-id', videoId);
+      var thumbNode = document.createElement('img');
+      thumbNode.src = '/media/video/cover/'+videoId+'.png';
+      div.appendChild(thumbNode);
+      var playButton = document.createElement('div');
+      playButton.setAttribute('class', 'play');
+      div.appendChild(playButton);
+      div.onclick = function () {
+        labnolVideo(this);
+      };
+      playerElements[n].appendChild(div);
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', initVideos);
+</script>
+</body>
+</html>

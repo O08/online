@@ -1,6 +1,8 @@
 package com.et.be.online.enums;
-import com.et.be.inbox.enums.inter.Code;
-public enum PayCodeEnum implements Code{
+
+import com.et.be.online.enums.inter.Code;
+
+public enum PayCodeEnum implements Code {
 
 
     /**

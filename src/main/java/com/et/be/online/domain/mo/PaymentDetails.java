@@ -4,6 +4,8 @@ import java.io.Serializable;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
+
+import java.math.BigDecimal;
 import java.util.Date;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -32,7 +34,7 @@ public class PaymentDetails extends Model<PaymentDetails> implements Serializabl
     /**
      * amount
      */
-    private Integer amount;
+    private BigDecimal amount;
     /**
      * provider
      */
@@ -41,6 +43,7 @@ public class PaymentDetails extends Model<PaymentDetails> implements Serializabl
      * tradNo 第三方支付流水号
      */
     private String tradNo;
+
     /**
      * status
      */

@@ -5,11 +5,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="shortcut icon" href="images/favicon.png" type="image/x-icon">
-    <title>Taffle</title>
+    <title>7nrom</title>
     <meta name="theme-color" content="#ECECEC">
 </head>
 <style>
-    .section-paySuccess ,.section-payFail{
+    .section-paySuccess ,.section-payFail, .section-cancel{
       display: none;
       text-align: center;
     }
@@ -72,8 +72,8 @@ height: 20px;
       <div><h2>pay successful</h2></div>
       <div class="pay-success-detail-container">
           <div class="pay-success-detail">
-              <div class="item"><span class="item-field">transaction no:</span><span class="item-value">1111111111</span></div>
-              <div class="item"><span class="item-field">amount paid:</span><span class="item-value">1111111111</span></div>
+              <div class="item"><span class="item-field">transaction no:</span><span class="item-value" id="success-transno"></span></div>
+              <div class="item"><span class="item-field">amount paid:</span><span class="item-value" id="success-amount"></span></div>
               <div class="success-action">
                   <a class="success-view-order" href="order-history.html">view order</a>
                   <a class="success-continue" href="/">continue</a>
@@ -86,7 +86,7 @@ height: 20px;
       <div><img src="images/pay-fail-icon.png"></div>
       <div><h2>transaction failed</h2></div>
       <div class="pay-fail-item">
-          <a href="payPalV2/toPay.html">try again</a>
+          <a id = "fail-try-again" href="#">try again</a>
       </div>
       <div class="pay-fail-item">
           <a href="contact.html">call center</a>
@@ -95,11 +95,20 @@ height: 20px;
           <a href="/">continue</a>
       </div>
   </section>
+<section class="section-cancel">
+    <div><img src="images/logo.png"></div>
+    <div><h2>Your order has been cancelled</h2></div>
+    <div class="pay-fail-item">
+        <a href="/">continue</a>
+    </div>
+</section>
+
+
 <div class="footer-bottom">
-    <div class="copyright">Copyright &copy; 2022.Company name All rights reserved.</div>
+    <div class="copyright">Copyright &copy; 2022. 7nrom,Inc All rights reserved.</div>
     <ul class="footer-bottom__menu">
-        <li><a href="#">Privacy Policy</a></li>
-        <li><a href="#">Terms of use</a></li>
+        <li><a href="https://www.iubenda.com/privacy-policy/40023955">Privacy Policy</a></li>
+        <li><a href="/terms-of-use.html">Terms of use</a></li>
     </ul>
 </div>
   <script src="libs/jquery-2.2.3.min.js"></script>
@@ -109,10 +118,19 @@ height: 20px;
  function handPayResult(){
    var result = getQueryVariable('payResult');
    if('error' === result){
+      var orderNo= getQueryVariable('orderNo');
+      document.getElementById('fail-try-again').href= 'payPalV2/rePay.html?orderDetailsId='+orderNo;
       $('.section-payFail').show();
    }
    if('success' === result){
+      var transno= getQueryVariable('transNO');
+      var amount = getQueryVariable('amount');
+      $('#success-transno').html(transno);
+      $('#success-amount').html(amount);
       $('.section-paySuccess').show();
+   }
+   if('cancel' === result){
+     $('.section-cancel').show();
    }
  }
     // get url param

@@ -1,8 +1,7 @@
 package com.et.be.online.controller;
 
 
-import com.et.be.inbox.domain.vo.ResponseVO;
-import com.et.be.online.constant.SceneConstant;
+import com.et.be.base.vo.ResponseVO;
 import com.et.be.online.domain.dto.CustomerAddressDTO;
 import com.et.be.online.service.CustomerAddressService;
 import com.et.be.online.service.ShipmentService;

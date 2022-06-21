@@ -16,4 +16,8 @@ public interface OptConstant {
      * 登录秘钥有效期
      */
     long TIME_OUT = 30000L;
+    /**
+     * 密码重置有效区
+     */
+    long TOKEN_OUT = 3600000L; // 1h
 }

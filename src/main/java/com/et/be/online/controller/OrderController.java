@@ -1,6 +1,6 @@
 package com.et.be.online.controller;
 
-import com.et.be.inbox.domain.vo.ResponseVO;
+import com.et.be.base.vo.ResponseVO;
 import com.et.be.online.service.OrderService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

@@ -1,10 +1,11 @@
 package com.et.be.online.service;
 
 
-import com.et.be.inbox.domain.dto.ContactDTO;
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.et.be.online.domain.dto.ContactUsDTO;
+import com.et.be.online.domain.mo.Subscription;
 
-public interface SubscribeService {
+public interface SubscribeService extends IService<Subscription> {
     void subscribeNewsLetter(String email);
     void handleContactUsMessage(ContactUsDTO contactUsDTO);
 }

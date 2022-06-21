@@ -5,7 +5,7 @@ import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.et.be.config.security.UserInfo;
+import com.et.be.base.security.UserInfo;
 import com.et.be.online.domain.dto.CustomerAddressDTO;
 import com.et.be.online.domain.mo.Customer;
 import com.et.be.online.domain.mo.CustomerAddress;
@@ -36,6 +36,7 @@ public class CustomerAddressServiceImpl extends ServiceImpl<CustomerAddressMappe
         // get customer address
         QueryWrapper<CustomerAddress> addressQueryWrapper = Wrappers.query();
         addressQueryWrapper.eq("user_id",customer.getId());
+        addressQueryWrapper.orderByDesc("modified_at");
         List<CustomerAddress> addressList = customerAddressMapper.selectList(addressQueryWrapper);
 
         //使用stream拷贝list
@@ -44,7 +45,7 @@ public class CustomerAddressServiceImpl extends ServiceImpl<CustomerAddressMappe
                     CustomerAddressVO d = new CustomerAddressVO();
                     BeanUtil.copyProperties(e, d);
                     String fullAddress = StrUtil.join(" ",e.getCountry(),e.getState(),e.getCity(),e.getAddressLine2(),e.getAddressLine1());
-                    d.setFullAddress(fullAddress);
+                    d.setFullAddress(fullAddress.replaceAll("null","")); // replace null to blank
                     return d;
                 })
                 .collect(Collectors.toList());

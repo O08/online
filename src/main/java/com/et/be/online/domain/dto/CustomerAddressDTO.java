@@ -41,4 +41,8 @@ public class CustomerAddressDTO {
     @NotEmpty
     private String mobile;
 
+    @ApiModelProperty("收件人")
+    @NotEmpty
+    private String receiver;
+
 }

@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="shortcut icon" href="images/favicon.png" type="image/x-icon">
 
-    <title>Taffle</title>
+    <title>7nrom</title>
 
     <!-- Fonts -->
     <link rel="stylesheet" href="assets/fonts/Lato/Lato.css">
@@ -31,7 +31,7 @@
 <header class="page-header header-home">
     <div class="container">
         <div class="top-bar row align-items-center">
-            <div class="search col-lg-4">
+            <div class="search col-lg-4" onclick="toggleSearch()">
                 <div class="form-search-toggle js-open-search">
                     <i class="search-icon flaticon-magnifying-glass-browser fi-2x"></i>
                     <span>Search</span>
@@ -42,7 +42,7 @@
             </div>
 
             <div class="logo col-lg-4">
-                <a href="index.html"><img src="images/7norm-logo-black.png" alt=""></a>
+                <a href="index.html"><img src="images/logo.png" alt=""></a>
             </div>
             <div class="quick-access-menu col-lg-4">
                 <div class="quick-access__item nav-sign-in">
@@ -99,7 +99,7 @@
                     <a class="nav-link" href="shop.html">Shop</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="promo.html">Promo</a>
+                    <a class="nav-link" href="discover.html">Discover</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="about.html">About</a>
@@ -149,23 +149,33 @@
                         <div class="order-item">
                             <div class="order-header">
                                 <div class="row">
-                                    <div class="col-2">
-                                        <span class="order-create-at">{{order.createdAt}}</span>
+                                    <div class="col-4">
+                                        <ul>
+                                            <li><span>Date</span> </li>
+                                            <li> <span class="order-info-value">{{order.createdAt}}</span></li>
+                                        </ul>
                                     </div>
                                     <div class="col-2">
-                                        <span> total:</span>
+                                        <ul>
+                                            <li><span>Total</span> </li>
+                                            <li><span class="order-info-value">${{(order.subTotal+order.tax+order.shipping).toFixed(2)}}</span></li>
+                                        </ul>
                                     </div>
                                     <div class="col-2">
-                                        <span>subtotal:${{order.subTotal}}</span>
+                                        <ul>
+                                            <li><span>Status</span> </li>
+                                            <li><span class="order-info-value">{{order.orderStatus}}</span></li>
+                                        </ul>
                                     </div>
                                     <div class="col-2">
-                                        <span>shipping:${{order.shipping}}</span>
                                     </div>
                                     <div class="col-2">
-                                        <span>tax:${{order.tax}}</span>
-                                    </div>
-                                    <div class="col-2">
-                                        <span>No:{{order.no}}</span>
+                                        <ul>
+                                            <li><span>No:{{order.no}}</span> </li>
+                                            <li>
+                                                <a v-show="!!order.shipmentId"  :href="'track-package.html?shipmentId='+ order.shipmentId" title="tracking"><img src="images/delivery-trunk-icon.png"></a>
+                                            </li>
+                                        </ul>
                                     </div>
                                 </div>
                             </div>
@@ -175,12 +185,26 @@
                                 <div class="col-2" >
                                     <a :href="order.productUrl"><img width="170" height="240" :src="order.featureImage"></a>
                                 </div>
-                                <div class="col-2">
-                                    <a :href="order.productUrl">{{order.productName}}</a>
+                                <div class="col-4 product-name">
+                                    <h4><a :href="order.productUrl">{{order.productName}}</a></h4>
                                 </div>
-                                <div class="col-4"></div>
+                                <div class="col-2">
+                                </div>
                                 <div class="col-4">
-                                    <a href="track-package.html">ship</a>
+                                    <div class="order-fee-detail-wrap">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <span>subtotal:&nbsp;&nbsp;</span>
+                                            <span class="amount">${{order.subTotal.toFixed(2)}}</span>
+                                        </div>
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <span>tax:&nbsp;&nbsp;</span>
+                                            <span class="amount">${{order.tax.toFixed(2)}}</span>
+                                        </div>
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <span>shipping:&nbsp;&nbsp;</span>
+                                            <span class="amount">${{order.shipping.toFixed(2)}}</span>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -193,6 +217,19 @@
             </div>
         </div>
     </div>
+    <div class="full-search-wrap-vue" v-show="showSearchWrap">
+        <div class="full-search container">
+            <div @click="toggleSearch()" class="close-s float-right js-close-search flaticon-cancel-button fi-2x" ></div>
+            <form action="search-result.html" class=" search-full-form">
+                <div class="position-relative">
+                    <i class="search-icon flaticon-magnifying-glass-browser fi-2x"></i>
+                    <input type="text" id="s-full" name="keyword" class="search-full-form__input" placeholder="Search">
+                    <input type="submit" class="d-none">
+                </div>
+                <p class="hint">Type in your search and press enter</p>
+            </form>
+        </div>
+    </div>
 </div>
 
 <footer class="page-footer">
@@ -203,7 +240,7 @@
                     <a href="/" class="logo">
                         <img src="images/logo-white.png" alt="">
                     </a>
-                    <div class="ml-lg-4 page-footer__text">Is a design-focused wordpress theme for unique products</div>
+                    <div class="ml-lg-4 page-footer__text">Is a online shopping mall  for unique products.</div>
                 </div>
             </div>
 
@@ -228,13 +265,10 @@
                     <a class="nav-link" href="shop.html">Shop</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="promo.html">Promo</a>
+                    <a class="nav-link" href="discover.html">Discover</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="about.html">About</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="blog.html">Blog</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="contact.html">Contact</a>
@@ -243,29 +277,17 @@
         </nav>
 
         <div class="footer-bottom">
-            <div class="copyright">Copyright &copy; 2022.Company name All rights reserved.</div>
+            <div class="copyright">Copyright &copy; 2022. 7nrom,Inc All rights reserved.</div>
             <ul class="footer-bottom__menu">
-                <li><a href="#">Privacy Policy</a></li>
-                <li><a href="#">Terms of use</a></li>
+                <li><a href="https://www.iubenda.com/privacy-policy/40023955">Privacy Policy</a></li>
+                <li><a href="/terms-of-use.html">Terms of use</a></li>
             </ul>
         </div>
     </div>
 </footer>
 
 
-<div class="full-search-wrap">
-    <div class="full-search container">
-        <div class="close-s float-right js-close-search flaticon-cancel-button fi-2x"></div>
-        <form action="search-result.html" class=" search-full-form">
-            <div class="position-relative">
-                <i class="search-icon flaticon-magnifying-glass-browser fi-2x"></i>
-                <input type="text" id="s-full" name="keyword" class="search-full-form__input" placeholder="Search">
-                <input type="submit" class="d-none">
-            </div>
-            <p class="hint">Type in your search and press enter</p>
-        </form>
-    </div>
-</div>
+
 
 <div id="js-back-to-top" class="back-to-top"><i class="flaticon-up-arrow-sign"></i> Page top</div>
 
@@ -281,6 +303,7 @@
 
 <!-- logic -->
 <script src="assets/js/order-history.js"></script>
+<script src="assets/js/saleos.js"></script>
 
 
 

@@ -6,11 +6,16 @@ var cartItemTemplate = '<tr class="cart-item"><td class="product-thumbnail"><a h
 
 var miniCartItemTemplate = '<li class="mini-cart-item"><div class="mini-cart-item__thumb"><a href="#{productUrl}"><img src="#{featuredImageUrl}"alt=""></a></div><div class="mini-cart-item__content"><div class="mini-cart-item__title"><a href="#{productUrl}">#{productName}</a></div><span class="amount">$#{price}</span></div></li>';
 
-var miniCartTemplate = '<div class="mini-cart__header">Your cart</div><div class="mini-cart__content"><ul class="mini-cart-list">#{miniCartList}</ul><div class="mini-cart__subtotal d-flex flex-wrap justify-content-between"><span>Subtotal</span><span>#{subtotal}</span></div><a href="checkout.html"class="btn btn-primary btn-lg btn-block mini-cart__btn">checkout</a></div><div class="mini-cart__footer"><div class="icon-box icon-box-left justify-content-center"><div class="icon-box__icon"><i class="flaticon flaticon-delivery-truck"></i></div><div class="icon-box__title">Delivery to all regions</div></div></div>';
+var miniCartTemplate = '<div class="mini-cart__header">Your cart</div><div class="mini-cart__content"><ul class="mini-cart-list">#{miniCartList}</ul><div class="mini-cart__subtotal d-flex flex-wrap justify-content-between"><span>Subtotal</span><span>#{subtotal}</span></div><a href="/cart.html"class="btn btn-primary btn-lg btn-block mini-cart__btn">checkout</a></div><div class="mini-cart__footer"><div class="icon-box icon-box-left justify-content-center"><div class="icon-box__icon"><i class="flaticon flaticon-delivery-truck"></i></div><div class="icon-box__title">Delivery to all regions</div></div></div>';
 
 function getTemplate(keySelector){
    return $(keySelector).html();
 }
+
+// reload
+ function refresh(){
+ window.location.reload();
+ }
 
 // home display special product
 function showFeaturedProducts(){
@@ -33,43 +38,53 @@ $.post('/api/v1/online/featuredProducts', function(data) {
 function getProductCardHtml(product){
                     var productHtml ='';
                     if(product.discountPercent > 0){
+                      var discountPrice = product.price * (100-product.discountPercent)/100;
                      productHtml = getTemplate('#featuredProductCard-template-with-discount')
-                         .replace('#{discount}','-'+product.discountPercent+'%')
-                         .replace('#{discountPrice}',product.price * product.discountPercent /100);
+                         .replaceAll('#{discount}','-'+product.discountPercent+'%')
+                         .replaceAll('#{discountPrice}',discountPrice.toFixed(2));
                     }
                     if(product.discountPercent === 0){
                        productHtml = getTemplate('#featuredProductCard-template-No-discount');
                     }
-                    productHtml = productHtml.replace('#{productUrl}',product.productUrl)
-                    .replace('#{featuredImageUrl}',product.featureImage)
-                    .replace('#{productName}',product.productName).replace('#{price}',product.price);
+                    productHtml = productHtml.replaceAll('#{productUrl}',product.productUrl)
+                    .replaceAll('#{featuredImageUrl}',product.featureImage)
+                    .replaceAll('#{productName}',product.productName).replaceAll('#{price}',product.price.toFixed(2));
 
                     return productHtml;
 
 }
 // subscribe newsletter
-$(".subscribe-form__btn").on( 'click', function() {
+$("#subscribe-form").on( 'submit', function(e) {
+ // prevent default submit
+    e.preventDefault();
+
              var email = $('.subscribe-form__input').val();
-             if($.isEmptyObject(email)){
-                return;
-             }
                var formData = {
                  email: email
                }
 
               $.post('/api/v1/online/subscribeNewsLetter', formData ,function(data) {
+                           window.location.href="/";
                           })
                             .fail(function(data) {
                               // place error code here
+                              alert('Wooho,Something wrong!');
                             });
           });
 
 
 function loadOnlineProducts(current){
+           var category = getQueryVariable('category');
+
+           var queryParams = {
+               orderBy: $('#order_by').val(),
+               category: !category ? '' : category
+           }
+
            var formData = {
                      current: current,
                      size: $('#per_page').val(),
-                     queryParams: $('#order_by').val()
+                     queryParams: JSON.stringify(queryParams)
            }
             $.ajax({
                 url: "/api/v1/online/onlineProductList",
@@ -167,28 +182,33 @@ $("#order_by").on( 'change', function() {
              loadOnlineProducts(1);
           });
 // contact us
-$(".contact-form__btn").on( 'click', function() {
+$(".contact-form").on( 'submit', function(e) {
+// 阻止默认提交
+             e.preventDefault();
              var firstname = $('#contact-firstname').val();
              var lastname = $('#contact-lastname').val();
              var email = $('#contact-email').val();
              var phone = $('#contact-phone').val();
              var message = $('#contact-message').val();
-             if($.isEmptyObject(message)){
-                return;
-             }
              var formData = {
-                firstname: firstname,
-                lastname: lastname,
+                firstName: firstname,
+                lastName: lastname,
                 email: email,
-                phone: phone,
+                phoneNumber: phone,
                 message: message
               }
 
-              $.post('/api/v1/online/contactus', formData ,function(data) {
-                          })
-                            .fail(function(data) {
-                              // place error code here
-                            });
+              	$.post('/api/v1/online/contactus',formData, function(data) {
+
+                               // 刷新页面
+                               refresh();
+                    })
+                      .fail(function(data) {
+                        // place error code here
+                        // place error code here
+                                        alert('Wooho,Something wrong!')
+                      });
+
           });
 // recommend
 function recommendProducts(){
@@ -213,7 +233,7 @@ $.post('/api/v1/online/recommendProducts', function(data) {
 function getPublicKeyInfo(){
     var publicKeyInfo = '';
     $.ajax({
-			url : 'api/v1/auth/getPublicKey',
+			url : '/api/v1/auth/getPublicKey',
 			type : 'POST',
 			async: false,
 			data : {},
@@ -230,10 +250,11 @@ function checkPasswords(){
 
 	var password = $("#signup-password").val();
 	var confirmedPassword = $("#signup-confirmed-password").val();
+    var note = document.querySelector('#signup-confirmed-password');
 
-     if(password != confirmedPassword){
-       $("#signup-password").setCustomValidity("Passwords do not match, please retype");
-     }
+     password != confirmedPassword ? note.setCustomValidity("Passwords do not match, please retype")
+      : note.setCustomValidity("");
+      note.reportValidity();
 }
 
 function doSignUp(){
@@ -243,23 +264,22 @@ function doSignUp(){
 	    var password = $("#signup-password").val();
 
 	    var publicKeyInfo = getPublicKeyInfo();
-        var signupInfo = {
-          email: email,
-          fullname: fullname,
-          password: password,
-          time: publicKeyInfo.time
-        };
 
     	var encrypt = new JSEncrypt();// plugin encrypt
         encrypt.setPublicKey(publicKeyInfo.publicKey);// set publicKey
-        var encrypted = encrypt.encrypt(JSON.stringify(signupInfo) );// encrypt sign up info
+        var encryptedPassword = encrypt.encrypt(password );// encrypt password
+
+        var signupInfo = {
+          email: email,
+          fullname: fullname,
+          password: encryptedPassword,
+          time: publicKeyInfo.time
+        };
 
 	$.ajax({
-		url : 'api/v1/auth/doSignUp',
+		url : '/api/v1/auth/doSignUp',
 		type : 'POST',
-		data : {
-		encrypted: encrypted
-		},
+		data : signupInfo ,
 		dataType : 'json',
 		success : function(result) {
 		    //  reset form
@@ -323,6 +343,12 @@ function rsaEncrypt(data){
 }
 
 function addToCart(){
+// if user not yet login . to login
+var alreadyLogin = $(".nav-account-container").is(":visible");
+if(!alreadyLogin){
+  window.location.href = "/authentication.html";
+  return;
+}
   var productCode = getQueryVariable('productCode');
   var quantity = $('#quantity').val();
   if($.isEmptyObject(productCode) ||  $.isEmptyObject(quantity) ){
@@ -332,11 +358,16 @@ function addToCart(){
     productCode: productCode,
     quantity: quantity
   };
-$.post('api/v1/shop/addCartItem',formData, function(data) {
-
-                  if(data.data){
-                    window.location.href='shop.html';
+$.post('/api/v1/shop/addCartItem',formData, function(data) {
+                  if(data.code == 2001){
+                      alert(data.desc);
+                      return;
                   }
+                  if(data.data){
+                    window.location.href='/shop.html';
+                    return ;
+                  }
+
                   if(!data.data){
                     alert('Wooho,Something wrong!')
                   }
@@ -354,11 +385,11 @@ function calculateSubtotal(cartItems){
      var discountPrice = cartItems[i].price*(100-cartItems[i].discountPercent)/100;
        subtotal = subtotal + discountPrice*cartItems[i].quantity;
      }
-     return subtotal;
+     return !subtotal ? '0.00' : subtotal.toFixed(2);
 }
 function showCartItem(){
 
-$.post('api/v1/shop/cart', function(data) {
+$.post('/api/v1/shop/cart', function(data) {
 
 
                   var cartItems = data.data;
@@ -397,7 +428,7 @@ var formData = {
    productCode: productCode,
    quantity: quantity
 }
-$.post('api/v1/shop/updateCartItem',formData, function(data) {
+$.post('/api/v1/shop/updateCartItem',formData, function(data) {
 
                   if(data.data){
                     showCartItem();
@@ -415,7 +446,7 @@ $.post('api/v1/shop/updateCartItem',formData, function(data) {
 }
 
 function removeItemFromCart(productCode){
-$.post('api/v1/shop/delCartItem',{productCode: productCode}, function(data) {
+$.post('/api/v1/shop/delCartItem',{productCode: productCode}, function(data) {
 
                   if(data.data){
                     showCartItem();
@@ -439,10 +470,10 @@ function getCartItemCardHtml(cartItem){
                     var discountPrice = cartItem.price*(100-cartItem.discountPercent)/100;
                     cartItemHtml = cartItemHtml.replaceAll('#{productUrl}',cartItem.productUrl)
                     .replaceAll('#{featuredImageUrl}',cartItem.featureImage)
-                    .replaceAll('#{productName}',cartItem.productName).replaceAll('#{price}',discountPrice)
+                    .replaceAll('#{productName}',cartItem.productName).replaceAll('#{price}',discountPrice.toFixed(2))
                     .replaceAll('>'+cartItem.quantity+'</option>',' selected = "selected">' + cartItem.quantity +'</option>')
                     .replaceAll('#{productCode}',cartItem.productCode)
-                    .replaceAll('#{total}',discountPrice*cartItem.quantity)
+                    .replaceAll('#{total}',(discountPrice*cartItem.quantity).toFixed(2))
                     ;
                     return cartItemHtml;
 
@@ -488,23 +519,28 @@ $.post('/api/v1/online/search',{keyword: keyword } ,function(data) {
 // display miniCart
 showMiniCart();
 function showMiniCart(){
-$.post('api/v1/shop/cart', function(data) {
+$.post('/api/v1/shop/cart', function(data) {
 
 
                   var cartItems = data.data;
                   var miniCartListHtml = '';
                   var miniCartHtml = '';
                   if($.isEmptyObject(cartItems) ){
+                    var noCartItemHtml = '<a href="/cart.html"class="mini-cart-link"><i class="cart__icon flaticon-online-shopping-cart fi-2x"></i><span class="mini-cart-link__qty">0 items</span></a><div class="mini-cart"><div class="mini-cart__content"><div class="empty-message">You have no items in your cart</div><a href="shop.html"class="btn btn-primary btn-lg mini-cart__btn">shop more</a></div><div class="mini-cart__footer"><div class="icon-box icon-box-left justify-content-center"><div class="icon-box__icon"><i class="flaticon flaticon-delivery-truck"></i></div><div class="icon-box__title">Delivery to all regions</div></div></div></div>';
+                    $('.header-mini-cart').html(noCartItemHtml);
+                    // hidden checkout button
+                    $('#cart-checkout').hide();
                     return;
                   }
 
                   // minicartitem html
                    for (var i=0;i<cartItems.length;i++) {
                       var discountPrice = cartItems[i].price*(100-cartItems[i].discountPercent)/100;
+                      var price = !discountPrice ? '' : (discountPrice*cartItems[i].quantity).toFixed(2);
                       miniCartListHtml = miniCartListHtml + miniCartItemTemplate.replaceAll('#{productUrl}',cartItems[i].productUrl)
                                           .replaceAll('#{featuredImageUrl}',cartItems[i].featureImage)
                                           .replaceAll('#{productName}',cartItems[i].productName)
-                                          .replaceAll('#{price}',discountPrice*cartItems[i].quantity);
+                                          .replaceAll('#{price}',price);
                    }
 
                   var subtotal = calculateSubtotal(cartItems);
@@ -517,7 +553,7 @@ $.post('api/v1/shop/cart', function(data) {
             })
               .fail(function(data) {
                 // place error code here
-                alert('Wooho,Something wrong!')
+                alert('Wooho,Something wrong!');
               });
 }
 // user basic status
@@ -527,7 +563,7 @@ function loginDetect(){
   $('.nav-account-container').toggle();
   $.post('/api/v1/nav/customer',function(data) {
                var customer = data.data;
-               if(!!customer.username){
+               if(!!customer && !!customer.username){
                  $('.nav-sign-up').toggle();
                  $('.nav-sign-in').toggle();
                  $('.nav-account-container').toggle();
@@ -535,6 +571,52 @@ function loginDetect(){
               })
                 .fail(function(data) {
                   // place error code here
+                  alert('Wooho,Something wrong!');
                 });
 }
+// call api load category list
+function shopCategories(){
+
+  $.post('/api/v1/online/shopCategories',{},function(data) {
+               if(data.data){
+                 var categories = data.data;
+                 var categoryHtml = '<li class="nav-item"><a href="/shop.html" class="nav-link active">All</a></li>';
+                 for (var i=0;i<categories.length;i++) {
+                    categoryHtml = categoryHtml + '<li class="nav-item"><a href="/shop.html?category='+categories[i].id+'" class="nav-link">'+categories[i].categoryName+'</a></li>';
+                  }
+                  $('.shop-categories-nav ul').html(categoryHtml);
+               }
+
+              })
+                .fail(function(data) {
+                  // place error code here
+                  alert('Wooho,Something wrong!');
+                });
+}
+
+ // 产品预览数据
+ function getProductInfo(productCode){
+ var formData =  {
+          productCode: productCode
+      }
+   $.post('/api/v1/online/singleProduct',formData, function(data) {
+             var product = data.data.product;
+             if(product.discountPercent>0){
+               var discountPrice = product.price*(100-product.discountPercent)/100;
+               var priceInfo = '<ins><span class="amount">$'+discountPrice.toFixed(2) +'</span></ins><del><span class="amount">'+product.price.toFixed(2)+'</span></del>';
+               $('.product-summary .price').html(priceInfo);
+               var discountPriceInfo = '<span class="onsale">-'+product.discountPercent+'%</span>';
+               $('.product-gallery').before(discountPriceInfo);
+               return;
+             }
+
+             $('.product-summary .price').html('<span class="amount">$'+product.price.toFixed(2)+'</span>');
+
+
+            })
+              .fail(function(data) {
+                // place error code here
+                alert('Wooho,Something wrong!');
+              });
+ }
 

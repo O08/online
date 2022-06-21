@@ -1,6 +1,7 @@
 package com.et.be.online.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
@@ -17,14 +18,15 @@ import com.et.be.online.domain.vo.ProductVO;
 import com.et.be.online.domain.vo.SingleProductVO;
 import com.et.be.online.mapper.*;
 import com.et.be.online.service.SceneService;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class SceneServiceImpl implements SceneService {
@@ -295,8 +297,11 @@ public class SceneServiceImpl implements SceneService {
         Page<ProductVO> page = new Page<>();
         page.setSize(pageDTO.getSize());
         page.setCurrent(pageDTO.getCurrent());
+        JsonObject queryParams = JsonParser.parseString(pageDTO.getQueryParams()).getAsJsonObject();
+        String orderBy = queryParams.get("orderBy").getAsString();
+        String category = queryParams.get("category").getAsString();
         // Newest to oldes
-        if(OptConstant.NEWEST_TO_OLDEST.equals(pageDTO.getQueryParams())){
+        if(OptConstant.NEWEST_TO_OLDEST.equals(orderBy)){
             page.setAsc("p.modified_at");
         }
         // Oldest to newest
@@ -305,8 +310,13 @@ public class SceneServiceImpl implements SceneService {
         }
 
 
-        return  sceneMapper.getOnlineProductList(page);
+        return  sceneMapper.getOnlineProductList(page,category);
 
+    }
+
+    @Override
+    public List<ProductCategory> shopCategories() {
+        return productCategoryMapper.selectList(Wrappers.query());
     }
 
 

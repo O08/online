@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="shortcut icon" href="images/favicon.png" type="image/x-icon">
 
-    <title>Taffle</title>
+    <title>7nrom</title>
 
     <!-- Fonts -->
     <link rel="stylesheet" href="assets/fonts/Lato/Lato.css">
@@ -17,7 +17,8 @@
 
     <!-- Libs -->
     <link rel="stylesheet" href="libs/bootstrap-4.3.1/css/bootstrap.min.css">
-
+    <link rel="stylesheet" href="libs/select2/css/select2.min.css">
+    <link rel="stylesheet" href="libs/slick/slick.css">
 
     <!-- Theme -->
     <link rel="stylesheet" href="assets/css/style.css">
@@ -42,7 +43,7 @@
             </div>
 
             <div class="logo col-lg-4">
-                <a href="index.html"><img src="images/7norm-logo-black.png" alt=""></a>
+                <a href="index.html"><img src="images/logo.png" alt=""></a>
             </div>
             <div class="quick-access-menu col-lg-4">
                 <div class="quick-access__item nav-sign-in">
@@ -99,7 +100,7 @@
                     <a class="nav-link" href="shop.html">Shop</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="promo.html">Promo</a>
+                    <a class="nav-link" href="discover.html">Discover</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="about.html">About</a>
@@ -150,7 +151,9 @@
                               <a href="https://www.iubenda.com/privacy-policy/40023955" class="nav-link" title="Privacy Policy "><img src="images/privacy-icon.png">Privacy Policy</a>
                           </div>
                           <div class="col-6">
-                              <a href="#" class="nav-link" title="Close Account "><img  src="images/delete-icon.png">Close 7norm Account</a>
+                              <a href="#" class="nav-link" title="Close Account " data-toggle="modal" data-target="#modal-add-address">
+                                  <img  src="images/delete-icon.png">Close 7norm Account
+                              </a>
                           </div>
                       </div>
                   </section>
@@ -161,7 +164,28 @@
         </div>
     </div>
 </div>
-
+<section class="section-delete-modal">
+    <!-- Modal -->
+    <div class="modal fade" id="modal-add-address" tabindex="-1" aria-labelledby="delete-modal-Label" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="delete-modal-Label">Delete Account</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you want to delete your account?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onclick="closeAccount()">Submit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 <footer class="page-footer">
     <div class="container">
         <div class="foot-info row">
@@ -170,7 +194,7 @@
                     <a href="/" class="logo">
                         <img src="images/logo-white.png" alt="">
                     </a>
-                    <div class="ml-lg-4 page-footer__text">Is a design-focused wordpress theme for unique products</div>
+                    <div class="ml-lg-4 page-footer__text">Is a online shopping mall  for unique products.</div>
                 </div>
             </div>
 
@@ -195,13 +219,10 @@
                     <a class="nav-link" href="shop.html">Shop</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="promo.html">Promo</a>
+                    <a class="nav-link" href="discover.html">Discover</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="about.html">About</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="blog.html">Blog</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="contact.html">Contact</a>
@@ -210,10 +231,10 @@
         </nav>
 
         <div class="footer-bottom">
-            <div class="copyright">Copyright &copy; 2022.Company name All rights reserved.</div>
+            <div class="copyright">Copyright &copy; 2022. 7nrom,Inc All rights reserved.</div>
             <ul class="footer-bottom__menu">
-                <li><a href="#">Privacy Policy</a></li>
-                <li><a href="#">Terms of use</a></li>
+                <li><a href="https://www.iubenda.com/privacy-policy/40023955">Privacy Policy</a></li>
+                <li><a href="/terms-of-use.html">Terms of use</a></li>
             </ul>
         </div>
     </div>
@@ -240,18 +261,35 @@
 <!-- Libs -->
 <script src="libs/jquery-2.2.3.min.js"></script>
 <script src="libs/bootstrap-4.3.1/js/bootstrap.min.js"></script>
-<script src="https://cdn.staticfile.org/vue/2.4.2/vue.min.js"></script>
-<script src="libs/jsencrypt.min.js"></script>
-
+<script src="libs/select2/js/select2.min.js"></script>
+<script src="libs/slick/slick.min.js"></script>
 
 <!-- Theme -->
 <script src="assets/js/custom.js"></script>
 
 <!-- logic -->
-<script src="assets/js/account-security.js"></script>
-<!-- privacy plicy -->
-<script type="text/javascript">(function (w,d) {var loader = function () {var s = d.createElement("script"), tag = d.getElementsByTagName("script")[0]; s.src="https://cdn.iubenda.com/iubenda.js"; tag.parentNode.insertBefore(s,tag);}; if(w.addEventListener){w.addEventListener("load", loader, false);}else if(w.attachEvent){w.attachEvent("onload", loader);}else{w.onload = loader;}})(window, document);</script>
+<script src="assets/js/saleos.js"></script>
+<script>
+function closeAccount(){
 
+$.post('api/v1/auth/doCloseAccount', function(data) {
+
+                 // if delete logout out
+                  if(data.data){
+                    window.location.href='/api/v1/auth/logout';
+                  }
+                  if(!data.data){
+                    alert('Wooho,Something wrong!')
+                  }
+
+            })
+              .fail(function(data) {
+                // place error code here
+                alert('Wooho,Something wrong!')
+              });
+
+}
+</script>
 
 </body>
 </html>

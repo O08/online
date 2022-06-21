@@ -10,11 +10,13 @@
     </sql>
 
     <select id="orderHistory" resultType="com.et.be.online.domain.vo.OrderHistoryVO">
-        select p.product_name,p.feature_image,p.product_url,o.sub_total,o.tax,o.shipping,o.created_at
+        select p.product_name,p.feature_image,p.product_url,o.sub_total,o.tax,o.shipping,o.created_at,o.id no,o.shipment_id,o.order_status
         from product p
         inner join order_item o on p.product_code = o.product_code
         inner join order_details s on o.order_id = s.id
-        where s.user_id = #{user_id};
+        where s.user_id = #{user_id}
+        order by o.modified_at desc
+        ;
     </select>
 
 </mapper>

@@ -1,14 +1,15 @@
 package com.et.be.online.service.impl;
 
 import cn.hutool.core.util.StrUtil;
-import com.et.be.Feature.common.Entity.RichTextConfig;
-import com.et.be.Feature.common.service.RichTextConfigService;
-import com.et.be.inbox.domain.dto.ContactDTO;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.et.be.online.constant.RichTextConfigConstant;
 import com.et.be.online.constant.SubscriptionConstant;
 import com.et.be.online.domain.dto.ContactUsDTO;
+import com.et.be.online.domain.mo.RichTextConfig;
 import com.et.be.online.domain.mo.Subscription;
 import com.et.be.online.mapper.SubscriptionMapper;
+import com.et.be.online.service.RichTextConfigService;
 import com.et.be.online.service.SubscribeService;
 import com.et.be.util.EmailUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,9 +18,7 @@ import org.springframework.stereotype.Service;
 import java.util.Date;
 
 @Service
-public class SubscribeServiceImpl implements SubscribeService {
-    @Autowired
-    private SubscriptionMapper subscriptionMapper;
+public class SubscribeServiceImpl extends ServiceImpl<SubscriptionMapper,Subscription> implements SubscribeService {
 
     @Autowired
     RichTextConfigService textConfigService;
@@ -28,13 +27,18 @@ public class SubscribeServiceImpl implements SubscribeService {
     EmailUtil emailUtil;
     @Override
     public void subscribeNewsLetter(String email) {
+        // if customer already subscribe return
+        boolean alreadySubscribe = this.baseMapper.selectCount(Wrappers.<Subscription>lambdaQuery().eq(Subscription::getEmail,email)) > 0 ;
+        if(alreadySubscribe){
+            return;
+        }
         Subscription subscription = new Subscription();
         subscription
                 .setEmail(email)
                 .setSubType(SubscriptionConstant.SUB_TYPE_NEWSLETTER)
                 .setCreatedAt(new Date())
                 .setModifiedAt(new Date());
-        subscriptionMapper.insert(subscription);
+        this.baseMapper.insert(subscription);
     }
 
     /**
@@ -64,6 +68,6 @@ public class SubscribeServiceImpl implements SubscribeService {
                 .replace("#{phoneNumber}",contactUsDTO.getPhoneNumber())
                 .replace("#{message} ",contactUsDTO.getMessage());
         // 发送邮件 1 html 2 发送对象 3 主题
-        emailUtil.sendHtmlEmail(content,contactUsDTO.getEmail(),"AlphaSpace 系统授权");
+        emailUtil.sendHtmlEmail(content,contactUsDTO.getEmail(),"Customer Message");
     }
 }

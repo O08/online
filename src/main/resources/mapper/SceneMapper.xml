@@ -42,7 +42,14 @@
     <select id="getOnlineProductList" resultType="com.et.be.online.domain.ro.ProductRO">
         select p.product_code,p.product_name,d.discount_percent,p.price,p.feature_image,p.product_url
         from product p
+        inner join product_category g on p.category_id = g.id
         left join discount d on p.discount_id = d.id
+        <where>
+            1=1
+            <if test="categoryId != null and categoryId != ''">
+                AND p.category_id = #{categoryId}
+            </if>
+        </where>
     </select>
 
 </mapper>

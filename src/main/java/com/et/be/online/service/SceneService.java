@@ -42,4 +42,6 @@ public interface SceneService {
     Boolean checkProductCode(String productCode);
 
     IPage<ProductRO> onlineProductList(PageDTO pageDTO);
+
+    List<ProductCategory> shopCategories();
 }

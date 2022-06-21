@@ -5,6 +5,8 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import java.util.Date;
+
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
@@ -36,6 +38,22 @@ public class OrderItem extends Model<OrderItem> implements Serializable {
      * 产品
      */
     private String productCode;
+
+    /**
+     * 产品名称
+     */
+    private String productName;
+
+    /**
+     * 折扣
+     */
+    private Double  discountPercent;
+
+    /**
+     * 商品原价
+     */
+    private Double  price;
+
     /**
      * 购买数量
      */
@@ -57,6 +75,15 @@ public class OrderItem extends Model<OrderItem> implements Serializable {
      * 配送运单id
      */
     private Long shipmentId;
+    /**
+     * captureId papal captureId
+     */
+    private String captureId;
+
+    /**
+     * order status
+     */
+    private String orderStatus;
 
     /**
      * 创建日期

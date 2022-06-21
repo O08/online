@@ -2,10 +2,9 @@ package com.et.be.online.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.et.be.config.security.UserInfo;
-import com.et.be.inbox.exception.ErrorCodeException;
+import com.et.be.base.exception.ErrorCodeException;
+import com.et.be.base.security.UserInfo;
 import com.et.be.online.domain.dto.CartItemDTO;
 import com.et.be.online.domain.mo.CartItem;
 import com.et.be.online.domain.ro.ProductRO;

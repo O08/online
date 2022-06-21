@@ -23,4 +23,11 @@ public interface SysConfigConstant {
      */
     String SERVER_DIR = "/Volumes/T7/workspace";
 
+    /**
+     * 系统站点
+     */
+    String WEB_SITE = "http://localhost:8081/";
+
+
+
 }

@@ -1,6 +1,6 @@
 package com.et.be.util;
 
-import com.et.be.config.Kuaidi100Config;
+import com.et.be.base.config.Kuaidi100Config;
 import com.google.gson.Gson;
 import com.kuaidi100.sdk.api.QueryTrack;
 import com.kuaidi100.sdk.core.IBaseClient;
