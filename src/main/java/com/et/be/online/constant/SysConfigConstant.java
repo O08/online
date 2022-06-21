@@ -7,7 +7,7 @@ public interface SysConfigConstant {
      */
     String DOC_DIR = "/doc/";
 
-    String BRAND_NAME = "High Five";
+    String BRAND_NAME = "7nrom";
 
 
     String ORDER_DESCRIPTION = "online channel";
@@ -26,7 +26,7 @@ public interface SysConfigConstant {
     /**
      * 系统站点
      */
-    String WEB_SITE = "http://localhost:8081/";
+    String WEB_SITE = "http://106.13.194.32:8081/";
 
 
 
